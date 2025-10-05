@@ -26,6 +26,6 @@
   "env": {
     "MONGODB_URI": "mongodb+srv://adcdenis_db_user:OyygDtHkpDqSF9Ae@cluster0.qizt5kq.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0 ",
     "JWT_SECRET": "contadordias_secret_key_2023",
-    "FRONTEND_URL": "https://contadordias-ilgge41o3-adcdenis-projects.vercel.app"
+    "FRONTEND_URL": "https://contadordias-steel.vercel.app"
   }
 }
