@@ -27,10 +27,5 @@
     "MONGODB_URI": "mongodb+srv://usuario:senha@cluster.mongodb.net/contadordias",
     "JWT_SECRET": "seu-jwt-secret-aqui",
     "FRONTEND_URL": "https://seu-app.vercel.app"
-  },
-  "functions": {
-    "api/index.js": {
-      "maxDuration": 10
-    }
   }
 }
