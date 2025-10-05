@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useAuth } from '../context/AuthContext';
 import CounterCard from '../components/CounterCard';
 import CounterForm from '../components/CounterForm';
 
 const Dashboard = () => {
+
   const [counters, setCounters] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
