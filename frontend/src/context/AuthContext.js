@@ -15,7 +15,12 @@ export const AuthProvider = ({ children }) => {
     // Verificar se há um usuário no localStorage
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
-      setUser(JSON.parse(storedUser));
+      const parsed = JSON.parse(storedUser);
+      setUser(parsed);
+      // Garantir que o header Authorization seja aplicado imediatamente ao carregar
+      if (parsed?.token) {
+        axios.defaults.headers.common['Authorization'] = `Bearer ${parsed.token}`;
+      }
     }
     setLoading(false);
   }, []);
@@ -38,6 +43,10 @@ export const AuthProvider = ({ children }) => {
       });
       
       const userData = response.data;
+      // Aplicar o token imediatamente para evitar corrida com useEffect
+      if (userData?.token) {
+        axios.defaults.headers.common['Authorization'] = `Bearer ${userData.token}`;
+      }
       setUser(userData);
       localStorage.setItem('user', JSON.stringify(userData));
       return { success: true };
@@ -59,6 +68,10 @@ export const AuthProvider = ({ children }) => {
       });
       
       const userData = response.data;
+      // Aplicar o token imediatamente para evitar corrida com useEffect
+      if (userData?.token) {
+        axios.defaults.headers.common['Authorization'] = `Bearer ${userData.token}`;
+      }
       setUser(userData);
       localStorage.setItem('user', JSON.stringify(userData));
       return { success: true };
@@ -74,6 +87,7 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     setUser(null);
     localStorage.removeItem('user');
+    delete axios.defaults.headers.common['Authorization'];
   };
 
   const value = {
