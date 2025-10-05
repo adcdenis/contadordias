@@ -23,9 +23,9 @@
       "dest": "/frontend/$1"
     }
   ],
-  "env": {
-    "MONGODB_URI": "mongodb+srv://user:senha@cluster0.qizt5kq.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0 ",
-    "JWT_SECRET": "contadordias_secret_key_2023",
-    "FRONTEND_URL": "https://contadordias-steel.vercel.app"
+ "env": {
+    "MONGODB_URI": "@mongodb_uri",
+    "JWT_SECRET": "@jwt_secret",
+    "FRONTEND_URL": "@frontend_url"
   }
 }
