@@ -19,7 +19,7 @@ const Dashboard = () => {
   const fetchCounters = async () => {
     try {
       setLoading(true);
-      const response = await axios.get('http://localhost:5000/api/counters');
+      const response = await axios.get(`${process.env.REACT_APP_API_URL || 'http://localhost:5000/api'}/counters`);
       setCounters(response.data);
       
       // Extrair categorias únicas
@@ -49,7 +49,7 @@ const Dashboard = () => {
   // Adicionar novo contador
   const handleAddCounter = async (counterData) => {
     try {
-      await axios.post('http://localhost:5000/api/counters', counterData);
+      await axios.post(`${process.env.REACT_APP_API_URL || 'http://localhost:5000/api'}/counters`, counterData);
       fetchCounters();
       setShowForm(false);
     } catch (err) {
@@ -61,7 +61,7 @@ const Dashboard = () => {
   // Excluir contador
   const handleDeleteCounter = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/counters/${id}`);
+      await axios.delete(`${process.env.REACT_APP_API_URL || 'http://localhost:5000/api'}/counters/${id}`);
       fetchCounters();
     } catch (err) {
       setError('Erro ao excluir contador');
@@ -73,7 +73,7 @@ const Dashboard = () => {
   const handleToggleFavorite = async (id, isFavorite) => {
     try {
       const counter = counters.find(c => c._id === id);
-      await axios.put(`http://localhost:5000/api/counters/${id}`, {
+      await axios.put(`${process.env.REACT_APP_API_URL || 'http://localhost:5000/api'}/counters/${id}`, {
         ...counter,
         isFavorite: !isFavorite
       });

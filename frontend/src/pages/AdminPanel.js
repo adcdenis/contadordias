@@ -10,7 +10,7 @@ const AdminPanel = () => {
     const fetchUsers = async () => {
       try {
         setLoading(true);
-        const response = await axios.get('http://localhost:5000/api/users');
+        const response = await axios.get(`${process.env.REACT_APP_API_URL || 'http://localhost:5000/api'}/users`);
         setUsers(response.data);
       } catch (err) {
         setError('Erro ao carregar usuários');
@@ -26,7 +26,7 @@ const AdminPanel = () => {
   const handleDeleteUser = async (id) => {
     if (window.confirm('Tem certeza que deseja excluir este usuário? Esta ação não pode ser desfeita.')) {
       try {
-        await axios.delete(`http://localhost:5000/api/users/${id}`);
+        await axios.delete(`${process.env.REACT_APP_API_URL || 'http://localhost:5000/api'}/users/${id}`);
         setUsers(users.filter(user => user._id !== id));
       } catch (err) {
         setError('Erro ao excluir usuário');

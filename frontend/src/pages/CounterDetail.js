@@ -20,7 +20,7 @@ const CounterDetail = () => {
     const fetchCounter = async () => {
       try {
         setLoading(true);
-        const response = await axios.get(`http://localhost:5000/api/counters/${id}`);
+        const response = await axios.get(`${process.env.REACT_APP_API_URL || 'http://localhost:5000/api'}/counters/${id}`);
         setCounter(response.data);
         calculateTimeRemaining(new Date(response.data.eventDate));
       } catch (err) {
@@ -54,8 +54,8 @@ const CounterDetail = () => {
   // Atualizar contador
   const handleUpdateCounter = async (updatedData) => {
     try {
-      await axios.put(`http://localhost:5000/api/counters/${id}`, updatedData);
-      const response = await axios.get(`http://localhost:5000/api/counters/${id}`);
+      await axios.put(`${process.env.REACT_APP_API_URL || 'http://localhost:5000/api'}/counters/${id}`, updatedData);
+      const response = await axios.get(`${process.env.REACT_APP_API_URL || 'http://localhost:5000/api'}/counters/${id}`);
       setCounter(response.data);
       setEditing(false);
       calculateTimeRemaining(new Date(response.data.eventDate));
@@ -69,7 +69,7 @@ const CounterDetail = () => {
   const handleDeleteCounter = async () => {
     if (window.confirm('Tem certeza que deseja excluir este contador?')) {
       try {
-        await axios.delete(`http://localhost:5000/api/counters/${id}`);
+        await axios.delete(`${process.env.REACT_APP_API_URL || 'http://localhost:5000/api'}/counters/${id}`);
         navigate('/dashboard');
       } catch (err) {
         setError('Erro ao excluir contador');
@@ -81,7 +81,7 @@ const CounterDetail = () => {
   // Alternar favorito
   const handleToggleFavorite = async () => {
     try {
-      await axios.put(`http://localhost:5000/api/counters/${id}`, {
+      await axios.put(`${process.env.REACT_APP_API_URL || 'http://localhost:5000/api'}/counters/${id}`, {
         ...counter,
         isFavorite: !counter.isFavorite
       });

@@ -32,7 +32,7 @@ export const AuthProvider = ({ children }) => {
   // Função para login
   const login = async (email, password) => {
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/login', {
+      const response = await axios.post(`${process.env.REACT_APP_API_URL || 'http://localhost:5000/api'}/auth/login`, {
         email,
         password
       });
@@ -52,7 +52,7 @@ export const AuthProvider = ({ children }) => {
   // Função para registro
   const register = async (name, email, password) => {
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/register', {
+      const response = await axios.post(`${process.env.REACT_APP_API_URL || 'http://localhost:5000/api'}/auth/register`, {
         name,
         email,
         password

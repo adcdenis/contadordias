@@ -1,14 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { calculateDetailedTime } from '../utils/timeUtils';
 
 const CounterCard = ({ counter, onDelete, onToggleFavorite }) => {
   const { _id, name, description, eventDate, category, isFavorite } = counter;
   const [showConfirmDelete, setShowConfirmDelete] = useState(false);
+  const [currentTime, setCurrentTime] = useState(new Date());
   const navigate = useNavigate();
   
-  // Calcular tempo detalhado
-  const timeDetails = calculateDetailedTime(eventDate);
+  // Atualizar o tempo atual a cada segundo
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 1000);
+    
+    return () => clearInterval(interval);
+  }, []);
+  
+  // Calcular tempo detalhado usando o tempo atual atualizado (memoizado para performance)
+  const timeDetails = useMemo(() => {
+    return calculateDetailedTime(eventDate, currentTime);
+  }, [eventDate, currentTime]);
+  
   const isPastEvent = timeDetails.past;
   
   // Obter a distância de tempo formatada já está em timeDetails.formattedDistance
@@ -119,16 +132,8 @@ const CounterCard = ({ counter, onDelete, onToggleFavorite }) => {
           {isPastEvent ? 'Ocorreu há' : 'Faltam'} {timeDetails.formattedDistance}
         </p>
         <p className="text-sm text-gray-600">{formattedDate}</p>
-      </div>
+      </div> 
       
-      <div className="mt-auto">
-        <Link 
-          to={`/counter/${_id}`} 
-          className="text-blue-600 hover:text-blue-800"
-        >
-          Ver detalhes
-        </Link>
-      </div>
     </div>
   );
 };
