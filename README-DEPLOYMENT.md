@@ -41,13 +41,22 @@ git push origin main
 
 1. No dashboard do projeto no Vercel, vá para "Settings"
 2. Clique em "Environment Variables"
-3. Adicione as seguintes variáveis:
+3. Clique em "Add New" para cada variável
+4. Adicione as seguintes variáveis de ambiente:
 
-```
-MONGODB_URI = mongodb+srv://usuario:senha@cluster.mongodb.net/contadordias
-JWT_SECRET = seu-jwt-secret-aqui
-FRONTEND_URL = https://seu-app.vercel.app
-```
+**Nome:** `MONGODB_URI`  
+**Valor:** `mongodb+srv://usuario:senha@cluster.mongodb.net/contadordias`
+
+**Nome:** `JWT_SECRET`  
+**Valor:** `seu-jwt-secret-aqui`
+
+**Nome:** `FRONTEND_URL`  
+**Valor:** `https://seu-app.vercel.app`
+
+**Importante:** 
+- Use os nomes EXATOS das variáveis (em maiúsculas)
+- Substitua os valores pelos seus dados reais
+- Para o `FRONTEND_URL`, use a URL que o Vercel gerar após o primeiro deploy
 
 ### 5. Atualizar URL da API no Frontend
 
