@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useAuth } from '../context/AuthContext';
 import CounterCard from '../components/CounterCard';
 import CounterForm from '../components/CounterForm';
 
 const Dashboard = () => {
+  const { user } = useAuth();
 
   const [counters, setCounters] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -34,6 +36,9 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
+    // Aguarda o usuário estar disponível (login concluído)
+    if (!user) return;
+    
     fetchCounters();
     
     // Atualizar contadores a cada minuto
@@ -42,7 +47,7 @@ const Dashboard = () => {
     }, 60000);
     
     return () => clearInterval(interval);
-  }, []);
+  }, [user]);
 
   // Adicionar novo contador
   const handleAddCounter = async (counterData) => {
