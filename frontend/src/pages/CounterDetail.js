@@ -14,6 +14,7 @@ const CounterDetail = () => {
   const [error, setError] = useState('');
   const [editing, setEditing] = useState(false);
   const [timeRemaining, setTimeRemaining] = useState({});
+  const [categories, setCategories] = useState([]);
 
   // Buscar detalhes do contador
   useEffect(() => {
@@ -33,6 +34,21 @@ const CounterDetail = () => {
 
     fetchCounter();
   }, [id]);
+
+  // Buscar categorias existentes para sugerir na edição
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await axios.get(`${process.env.REACT_APP_API_URL || 'http://localhost:5000/api'}/counters`);
+        const uniqueCategories = [...new Set(response.data.map(c => c.category))];
+        setCategories(uniqueCategories);
+      } catch (err) {
+        // Não bloqueia a página caso não consiga carregar categorias
+        console.error('Erro ao carregar categorias', err);
+      }
+    };
+    fetchCategories();
+  }, []);
 
   // Calcular tempo restante
   const calculateTimeRemaining = (eventDate) => {
@@ -128,6 +144,7 @@ const CounterDetail = () => {
             counter={counter} 
             onSubmit={handleUpdateCounter} 
             onCancel={() => setEditing(false)} 
+            categories={categories}
           />
         </div>
       ) : (
