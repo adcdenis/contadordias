@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { getUsers, deleteUser } = require('../controllers/userController');
+const { getUsers, deleteUser, updateUserPassword } = require('../controllers/userController');
 const { protect, admin } = require('../middleware/auth');
 
 // Todas as rotas são protegidas e restritas a administradores
@@ -12,6 +12,7 @@ router.route('/')
   .get(getUsers);
 
 router.route('/:id')
+  .put(updateUserPassword)
   .delete(deleteUser);
 
 module.exports = router;

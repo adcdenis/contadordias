@@ -1,15 +1,30 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
 const Header = () => {
   const { user, logout, isAdmin } = useAuth();
   const navigate = useNavigate();
+  const [menuOpen, setMenuOpen] = useState(false);
+  const menuRef = useRef(null);
 
   const handleLogout = () => {
     logout();
+    setMenuOpen(false);
     navigate('/login');
   };
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setMenuOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   return (
     <header className="bg-blue-600 text-white shadow-md">
@@ -29,15 +44,20 @@ const Header = () => {
                 </Link>
               )}
               
-              <div className="relative group">
-                <button className="px-3 py-2 rounded hover:bg-blue-700 flex items-center">
+              <div className="relative" ref={menuRef}>
+                <button
+                  className="px-3 py-2 rounded hover:bg-blue-700 flex items-center"
+                  onClick={() => setMenuOpen((prev) => !prev)}
+                  aria-haspopup="menu"
+                  aria-expanded={menuOpen}
+                >
                   <span className="mr-1">{user.name}</span>
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                   </svg>
                 </button>
                 
-                <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10 hidden group-hover:block">
+                <div className={`absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10 ${menuOpen ? 'block' : 'hidden'}`}>
                   <button
                     onClick={handleLogout}
                     className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100"

@@ -5,6 +5,9 @@ const AdminPanel = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [editingUserId, setEditingUserId] = useState(null);
+  const [newPassword, setNewPassword] = useState('');
+  const [saving, setSaving] = useState(false);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -32,6 +35,37 @@ const AdminPanel = () => {
         setError('Erro ao excluir usuário');
         console.error(err);
       }
+    }
+  };
+
+  const openEditPassword = (id) => {
+    setEditingUserId(id);
+    setNewPassword('');
+    setError('');
+  };
+
+  const cancelEditPassword = () => {
+    setEditingUserId(null);
+    setNewPassword('');
+  };
+
+  const handleUpdatePassword = async (id) => {
+    try {
+      if (!newPassword || newPassword.length < 6) {
+        setError('A senha deve ter pelo menos 6 caracteres');
+        return;
+      }
+      setSaving(true);
+      await axios.put(`${process.env.REACT_APP_API_URL || 'http://localhost:5000/api'}/users/${id}`, {
+        password: newPassword
+      });
+      cancelEditPassword();
+      alert('Senha atualizada com sucesso');
+    } catch (err) {
+      setError('Erro ao atualizar senha');
+      console.error(err);
+    } finally {
+      setSaving(false);
     }
   };
 
@@ -84,7 +118,8 @@ const AdminPanel = () => {
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
               {users.map(user => (
-                <tr key={user._id}>
+                <React.Fragment key={user._id}>
+                <tr>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="text-sm font-medium text-gray-900">{user.name}</div>
                   </td>
@@ -103,6 +138,13 @@ const AdminPanel = () => {
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                     <button
+                      onClick={() => openEditPassword(user._id)}
+                      className="text-blue-600 hover:text-blue-900 mr-4"
+                      title="Editar senha"
+                    >
+                      Editar Senha
+                    </button>
+                    <button
                       onClick={() => handleDeleteUser(user._id)}
                       className="text-red-600 hover:text-red-900"
                       disabled={user.isAdmin}
@@ -112,6 +154,36 @@ const AdminPanel = () => {
                     </button>
                   </td>
                 </tr>
+                {editingUserId === user._id && (
+                  <tr className="bg-gray-50">
+                    <td colSpan="5" className="px-6 py-4">
+                      <div className="flex items-center gap-2">
+                        <input
+                          type="password"
+                          className="form-input max-w-sm"
+                          placeholder="Nova senha"
+                          value={newPassword}
+                          onChange={(e) => setNewPassword(e.target.value)}
+                        />
+                        <button
+                          onClick={() => handleUpdatePassword(user._id)}
+                          className="btn btn-primary"
+                          disabled={saving}
+                        >
+                          {saving ? 'Salvando...' : 'Salvar'}
+                        </button>
+                        <button
+                          onClick={cancelEditPassword}
+                          className="btn"
+                          disabled={saving}
+                        >
+                          Cancelar
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                )}
+                </React.Fragment>
               ))}
               
               {users.length === 0 && (
