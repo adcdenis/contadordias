@@ -14,6 +14,8 @@ const Dashboard = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
   const [categories, setCategories] = useState([]);
+  const [selectedTag, setSelectedTag] = useState('');
+  const [tags, setTags] = useState([]);
 
   // Buscar contadores
   const fetchCounters = async () => {
@@ -25,6 +27,10 @@ const Dashboard = () => {
       // Extrair categorias únicas
       const uniqueCategories = [...new Set(response.data.map(counter => counter.category))];
       setCategories(uniqueCategories);
+
+      // Extrair tags únicas
+      const uniqueTags = [...new Set(response.data.flatMap(counter => counter.tags || []))];
+      setTags(uniqueTags);
       
       setError('');
     } catch (err) {
@@ -91,7 +97,8 @@ const Dashboard = () => {
   const filteredCounters = counters.filter(counter => {
     const matchesSearch = counter.name.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesCategory = selectedCategory ? counter.category === selectedCategory : true;
-    return matchesSearch && matchesCategory;
+    const matchesTag = selectedTag ? (Array.isArray(counter.tags) && counter.tags.includes(selectedTag)) : true;
+    return matchesSearch && matchesCategory && matchesTag;
   });
 
   return (
@@ -113,7 +120,7 @@ const Dashboard = () => {
       )}
 
       <div className="mb-6 flex flex-col md:flex-row gap-4">
-        <div className="w-full md:w-2/3">
+        <div className="w-full md:w-1/2">
           <input
             type="text"
             placeholder="Buscar por nome..."
@@ -122,7 +129,7 @@ const Dashboard = () => {
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
-        <div className="w-full md:w-1/3">
+        <div className="w-full md:w-1/4">
           <select
             className="form-input"
             value={selectedCategory}
@@ -132,6 +139,20 @@ const Dashboard = () => {
             {categories.map((category, index) => (
               <option key={index} value={category}>
                 {category}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="w-full md:w-1/4">
+          <select
+            className="form-input"
+            value={selectedTag}
+            onChange={(e) => setSelectedTag(e.target.value)}
+          >
+            <option value="">Todas as tags</option>
+            {tags.map((tag, index) => (
+              <option key={index} value={tag}>
+                {tag}
               </option>
             ))}
           </select>

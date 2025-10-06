@@ -128,7 +128,7 @@ const CounterCard = ({ counter, onDelete, onToggleFavorite }) => {
       )}
       
       <div className="mb-4">
-        <p className="text-lg font-bold">
+        <p className={`text-lg font-bold ${isPastEvent ? 'text-red-600' : ''}`}>
           {isPastEvent ? 'Ocorreu há' : 'Faltam'} {timeDetails.formattedDistance}
         </p>
         <p className="text-sm text-gray-600">{formattedDate}</p>
