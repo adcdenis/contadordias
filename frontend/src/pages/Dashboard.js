@@ -73,20 +73,6 @@ const Dashboard = () => {
     }
   };
 
-  // Alternar favorito
-  const handleToggleFavorite = async (id, isFavorite) => {
-    try {
-      const counter = counters.find(c => c._id === id);
-      await axios.put(`${process.env.REACT_APP_API_URL || 'http://localhost:5000/api'}/counters/${id}`, {
-        ...counter,
-        isFavorite: !isFavorite
-      });
-      fetchCounters();
-    } catch (err) {
-      setError('Erro ao atualizar contador');
-      console.error(err);
-    }
-  };
 
   // Filtrar contadores
   const filteredCounters = counters.filter(counter => {
@@ -174,7 +160,6 @@ const Dashboard = () => {
               key={counter._id}
               counter={counter}
               onDelete={handleDeleteCounter}
-              onToggleFavorite={handleToggleFavorite}
             />
           ))}
         </div>

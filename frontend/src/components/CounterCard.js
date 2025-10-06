@@ -2,8 +2,8 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { calculateDetailedTime } from '../utils/timeUtils';
 
-const CounterCard = ({ counter, onDelete, onToggleFavorite }) => {
-  const { _id, name, description, eventDate, category, isFavorite } = counter;
+const CounterCard = ({ counter, onDelete }) => {
+  const { _id, name, description, eventDate, category } = counter;
   const [showConfirmDelete, setShowConfirmDelete] = useState(false);
   const [currentTime, setCurrentTime] = useState(new Date());
   const navigate = useNavigate();
@@ -33,9 +33,7 @@ const CounterCard = ({ counter, onDelete, onToggleFavorite }) => {
   // Determinar a classe CSS com base no status do evento
   const cardClass = isPastEvent 
     ? 'counter-card-past' 
-    : isFavorite 
-      ? 'counter-card-favorite' 
-      : 'counter-card-future';
+    : 'counter-card-future';
       
   // Função para confirmar exclusão
   const handleDeleteClick = () => {
@@ -65,16 +63,6 @@ const CounterCard = ({ counter, onDelete, onToggleFavorite }) => {
       <div className="flex justify-between items-start mb-4">
         <h3 className="text-lg md:text-xl font-semibold truncate">{name}</h3>
         <div className="flex space-x-2" onClick={(e) => e.stopPropagation()}>
-          <button 
-            onClick={(e) => {
-              e.stopPropagation();
-              onToggleFavorite(_id, isFavorite);
-            }}
-            className="counter-action-btn text-yellow-500 hover:text-yellow-600"
-            title={isFavorite ? "Remover dos favoritos" : "Adicionar aos favoritos"}
-          >
-            {isFavorite ? '★' : '☆'}
-          </button>
           <Link 
             to={`/counter/${_id}`} 
             className="counter-action-btn text-blue-600 hover:text-blue-700"

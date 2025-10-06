@@ -55,17 +55,7 @@ const Home = () => {
           </p>
         </div>
         
-        <div className="bg-white p-6 rounded-lg shadow-md">
-          <div className="text-blue-600 text-4xl mb-4">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
-            </svg>
-          </div>
-          <h2 className="text-xl font-bold mb-2">Favoritos</h2>
-          <p className="text-gray-600">
-            Marque seus contadores mais importantes como favoritos para acesso rápido.
-          </p>
-        </div>
+        {/* Seção de favoritos removida */}
       </div>
       
       <div className="bg-gray-100 w-full py-12">
