@@ -23,6 +23,7 @@ const CounterCard = ({ counter, onDelete, onToggleFavorite }) => {
   }, [eventDate, currentTime]);
   
   const isPastEvent = timeDetails.past;
+  const isYearsVisible = timeDetails.years > 0;
   
   // Obter a distância de tempo formatada já está em timeDetails.formattedDistance
   
@@ -58,26 +59,27 @@ const CounterCard = ({ counter, onDelete, onToggleFavorite }) => {
 
   return (
     <div 
-      className={`counter-card ${cardClass} bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 p-4 border border-gray-100 cursor-pointer`}
+      className={`counter-card ${cardClass} cursor-pointer`}
       onClick={navigateToCounter}
     >
-      <div className="flex justify-between items-start mb-3">
-        <h3 className="text-xl font-bold truncate">{name}</h3>
-        <div className="flex space-x-3" onClick={(e) => e.stopPropagation()}>
+      <div className="flex justify-between items-start mb-4">
+        <h3 className="text-lg md:text-xl font-semibold truncate">{name}</h3>
+        <div className="flex space-x-2" onClick={(e) => e.stopPropagation()}>
           <button 
             onClick={(e) => {
               e.stopPropagation();
               onToggleFavorite(_id, isFavorite);
             }}
-            className="text-yellow-500 hover:text-yellow-600 transform hover:scale-110 transition-transform"
+            className="counter-action-btn text-yellow-500 hover:text-yellow-600"
             title={isFavorite ? "Remover dos favoritos" : "Adicionar aos favoritos"}
           >
             {isFavorite ? '★' : '☆'}
           </button>
           <Link 
             to={`/counter/${_id}`} 
-            className="text-blue-500 hover:text-blue-600 transform hover:scale-110 transition-transform"
+            className="counter-action-btn text-blue-600 hover:text-blue-700"
             onClick={(e) => e.stopPropagation()}
+            title="Ver detalhes"
           >
             <span>👁️</span>
           </Link>
@@ -86,7 +88,8 @@ const CounterCard = ({ counter, onDelete, onToggleFavorite }) => {
               e.stopPropagation();
               handleDeleteClick();
             }}
-            className="text-red-500 hover:text-red-600 transform hover:scale-110 transition-transform"
+            className="counter-action-btn text-red-600 hover:text-red-700"
+            title="Excluir"
           >
             <span>🗑️</span>
           </button>
@@ -117,21 +120,48 @@ const CounterCard = ({ counter, onDelete, onToggleFavorite }) => {
         </div>
       )}
       
-      <div className="mb-4">
-        <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">
-          {category}
-        </span>
+      <div className="mb-3">
+        <span className="counter-badge">{category}</span>
       </div>
       
       {description && (
-        <p className="text-gray-700 mb-4 line-clamp-2">{description}</p>
+        <p className="text-gray-700 mb-3 line-clamp-2">{description}</p>
+      )}
+
+      {Array.isArray(counter.tags) && counter.tags.length > 0 && (
+        <div className="mb-3">
+          {counter.tags.slice(0, 3).map((tag, index) => (
+            <span key={index} className="counter-tag">{tag}</span>
+          ))}
+        </div>
       )}
       
-      <div className="mb-4">
-        <p className={`text-lg font-bold ${isPastEvent ? 'text-red-600' : ''}`}>
-          {isPastEvent ? 'Ocorreu há' : 'Faltam'} {timeDetails.formattedDistance}
-        </p>
-        <p className="text-sm text-gray-600">{formattedDate}</p>
+      <div className="mt-2">
+        <div className={`grid grid-cols-2 sm:grid-cols-3 ${isYearsVisible ? 'md:grid-cols-5' : 'md:grid-cols-4'} gap-3 text-center`}>
+          {isYearsVisible && (
+            <div className={`counter-metric ${isPastEvent ? 'counter-metric-red' : 'counter-metric-blue'}`}>
+              <span className="counter-metric-number">{timeDetails.years}</span>
+              <span className="counter-metric-label">Anos</span>
+            </div>
+          )}
+          <div className={`counter-metric ${isPastEvent ? 'counter-metric-red' : 'counter-metric-blue'}`}>
+            <span className="counter-metric-number">{timeDetails.days}</span>
+            <span className="counter-metric-label">Dias</span>
+          </div>
+          <div className={`counter-metric ${isPastEvent ? 'counter-metric-red' : 'counter-metric-blue'}`}>
+            <span className="counter-metric-number">{timeDetails.hours}</span>
+            <span className="counter-metric-label">Horas</span>
+          </div>
+          <div className={`counter-metric ${isPastEvent ? 'counter-metric-red' : 'counter-metric-blue'}`}>
+            <span className="counter-metric-number">{timeDetails.minutes}</span>
+            <span className="counter-metric-label">Mins</span>
+          </div>
+          <div className={`counter-metric ${isPastEvent ? 'counter-metric-red' : 'counter-metric-blue'}`}>
+            <span className="counter-metric-number">{timeDetails.seconds}</span>
+            <span className="counter-metric-label">Segs</span>
+          </div>
+        </div>
+        <p className="text-sm text-gray-600 mt-3">{formattedDate}</p>
       </div> 
       
     </div>
