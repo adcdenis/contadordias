@@ -87,12 +87,12 @@ const Dashboard = () => {
   );
 
   return (
-    <div className="p-4">
-      <div className="flex justify-between items-center mb-6 bg-gradient-to-r from-blue-500 to-indigo-600 p-4 rounded-lg shadow-md">
-        <h1 className="text-3xl font-bold text-white">Meus Contadores</h1>
+    <div className="p-3">
+      <div className="flex justify-between items-center mb-4 bg-gradient-to-r from-blue-500 to-indigo-600 p-3 rounded-md shadow">
+        <h1 className="text-2xl font-bold text-white">Meus Contadores</h1>
         <button
           onClick={() => setShowForm(true)}
-          className="bg-white text-blue-600 hover:bg-blue-50 font-bold py-2 px-4 rounded-lg shadow transition-all duration-300"
+          className="bg-white text-blue-600 hover:bg-blue-50 font-semibold py-1.5 px-3 rounded-md shadow-sm transition-all duration-300"
         >
           Novo Contador
         </button>
@@ -149,17 +149,17 @@ const Dashboard = () => {
           <p className="text-gray-500">Carregando contadores...</p>
         </div>
       ) : sortedCounters.length === 0 ? (
-        <div className="text-center py-8 bg-gray-50 rounded-lg shadow-sm">
+        <div className="text-center py-6 bg-gray-50 rounded-md shadow-sm">
           <p className="text-gray-500">Nenhum contador encontrado.</p>
           <button
             onClick={() => setShowForm(true)}
-            className="mt-4 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg shadow transition-all duration-300"
+            className="mt-4 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-1.5 px-3 rounded-md shadow-sm transition-all duration-300"
           >
             Criar seu primeiro contador
           </button>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {sortedCounters.map(counter => (
             <CounterCard
               key={counter._id}

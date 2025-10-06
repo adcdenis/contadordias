@@ -60,8 +60,8 @@ const CounterCard = ({ counter, onDelete }) => {
       className={`counter-card ${cardClass} cursor-pointer`}
       onClick={navigateToCounter}
     >
-      <div className="flex justify-between items-start mb-4">
-        <h3 className="text-lg md:text-xl font-semibold truncate">{name}</h3>
+      <div className="flex justify-between items-start mb-3">
+        <h3 className="text-base md:text-lg font-semibold truncate">{name}</h3>
         <div className="flex space-x-2" onClick={(e) => e.stopPropagation()}>
           <Link 
             to={`/counter/${_id}`} 
@@ -108,18 +108,12 @@ const CounterCard = ({ counter, onDelete }) => {
         </div>
       )}
       
-      <div className="mb-3">
+      <div className="mb-2">
         <span className="counter-badge">{category}</span>
-      </div>
+      </div>      
       
-      {description && (
-        <p className="text-gray-700 mb-3 line-clamp-2">{description}</p>
-      )}
-
-      
-      
-      <div className="mt-2">
-        <div className={`grid grid-cols-2 sm:grid-cols-3 ${isYearsVisible ? 'md:grid-cols-5' : 'md:grid-cols-4'} gap-3 text-center`}>
+      <div className="mt-1">
+        <div className={`grid grid-cols-2 sm:grid-cols-3 ${isYearsVisible ? 'md:grid-cols-5' : 'md:grid-cols-4'} gap-2 text-center`}>
           {isYearsVisible && (
             <div className={`counter-metric ${isPastEvent ? 'counter-metric-red' : 'counter-metric-blue'}`}>
               <span className="counter-metric-number">{timeDetails.years}</span>
@@ -143,7 +137,7 @@ const CounterCard = ({ counter, onDelete }) => {
             <span className="counter-metric-label">Segs</span>
           </div>
         </div>
-        <p className="text-sm text-gray-600 mt-3">{formattedDate}</p>
+        <p className="text-xs text-gray-600 mt-2">{formattedDate}</p>
       </div> 
       
     </div>
