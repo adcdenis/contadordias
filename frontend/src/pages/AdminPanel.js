@@ -8,6 +8,7 @@ const AdminPanel = () => {
   const [editingUserId, setEditingUserId] = useState(null);
   const [newPassword, setNewPassword] = useState('');
   const [saving, setSaving] = useState(false);
+  const [confirmDeleteUser, setConfirmDeleteUser] = useState(null);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -26,16 +27,25 @@ const AdminPanel = () => {
     fetchUsers();
   }, []);
 
-  const handleDeleteUser = async (id) => {
-    if (window.confirm('Tem certeza que deseja excluir este usuário? Esta ação não pode ser desfeita.')) {
-      try {
-        await axios.delete(`${process.env.REACT_APP_API_URL || 'http://localhost:5000/api'}/users/${id}`);
-        setUsers(users.filter(user => user._id !== id));
-      } catch (err) {
-        setError('Erro ao excluir usuário');
-        console.error(err);
-      }
+  const openConfirmDelete = (user) => {
+    if (user.isAdmin) return;
+    setConfirmDeleteUser(user);
+  };
+
+  const confirmDelete = async () => {
+    if (!confirmDeleteUser) return;
+    try {
+      await axios.delete(`${process.env.REACT_APP_API_URL || 'http://localhost:5000/api'}/users/${confirmDeleteUser._id}`);
+      setUsers(users.filter(u => u._id !== confirmDeleteUser._id));
+      setConfirmDeleteUser(null);
+    } catch (err) {
+      setError('Erro ao excluir usuário');
+      console.error(err);
     }
+  };
+
+  const cancelDelete = () => {
+    setConfirmDeleteUser(null);
   };
 
   const openEditPassword = (id) => {
@@ -145,7 +155,7 @@ const AdminPanel = () => {
                       Editar Senha
                     </button>
                     <button
-                      onClick={() => handleDeleteUser(user._id)}
+                      onClick={() => openConfirmDelete(user)}
                       className="text-red-600 hover:text-red-900"
                       disabled={user.isAdmin}
                       title={user.isAdmin ? "Não é possível excluir um administrador" : "Excluir usuário"}
@@ -197,6 +207,20 @@ const AdminPanel = () => {
           </table>
         </div>
       </div>
+      {confirmDeleteUser && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded-lg w-full max-w-md">
+            <h3 className="text-xl font-semibold mb-3">Confirmar exclusão</h3>
+            <p className="text-gray-700 mb-6">
+              Tem certeza que deseja excluir o usuário <span className="font-medium">{confirmDeleteUser.name}</span>? Esta ação não pode ser desfeita.
+            </p>
+            <div className="flex justify-end gap-3">
+              <button onClick={cancelDelete} className="btn">Cancelar</button>
+              <button onClick={confirmDelete} className="btn btn-danger">Excluir</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

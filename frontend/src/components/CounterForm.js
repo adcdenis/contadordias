@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const CounterForm = ({ counter, onSubmit, onCancel }) => {
+const CounterForm = ({ counter, onSubmit, onCancel, categories = [] }) => {
   const [name, setName] = useState(counter?.name || '');
   const [description, setDescription] = useState(counter?.description || '');
   const [eventDate, setEventDate] = useState(
@@ -105,19 +105,20 @@ const CounterForm = ({ counter, onSubmit, onCancel }) => {
         <label className="form-label" htmlFor="category">
           Categoria
         </label>
-        <select
+        <input
           id="category"
+          type="text"
           className="form-input"
           value={category}
           onChange={(e) => setCategory(e.target.value)}
-        >
-          <option value="Pessoal">Pessoal</option>
-          <option value="Trabalho">Trabalho</option>
-          <option value="Estudo">Estudo</option>
-          <option value="Feriado">Feriado</option>
-          <option value="Aniversário">Aniversário</option>
-          <option value="Outro">Outro</option>
-        </select>
+          list="category-options"
+          placeholder="Digite ou escolha uma categoria"
+        />
+        <datalist id="category-options">
+          {Array.isArray(categories) && categories.map((c, idx) => (
+            <option key={idx} value={c} />
+          ))}
+        </datalist>
       </div>
       
       <div className="mb-6">

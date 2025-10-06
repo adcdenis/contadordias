@@ -166,6 +166,7 @@ const Dashboard = () => {
             <CounterForm 
               onSubmit={handleAddCounter} 
               onCancel={() => setShowForm(false)} 
+              categories={categories}
             />
           </div>
         </div>
