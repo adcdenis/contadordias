@@ -172,41 +172,37 @@ const CounterDetail = () => {
           </div>
           
           <div className="mb-8">
-            <h3 className="text-lg font-semibold mb-2">Contador</h3>
-            {timeRemaining.past ? (
-              <p className="text-2xl font-bold text-red-600">Este evento já ocorreu</p>
-            ) : (
+            <h3 className="text-lg font-semibold mb-2">Contador</h3>            
               <div className="grid grid-cols-6 gap-2 text-center">
                 {timeRemaining.years > 0 && (
-                  <div className="bg-blue-100 p-3 rounded-lg">
+                   <div className={`counter-metric ${timeRemaining.past ? 'counter-metric-red rounded-lg' : 'counter-metric-blue rounded-lg'}`}> 
                     <span className="block text-2xl font-bold">{timeRemaining.years}</span>
                     <span className="text-gray-600 text-sm">{timeRemaining.years === 1 ? 'Ano' : 'Anos'}</span>
                   </div>
                 )}
                 {timeRemaining.months > 0 && (
-                  <div className="bg-blue-100 p-3 rounded-lg">
+                   <div className={`counter-metric ${timeRemaining.past ? 'counter-metric-red rounded-lg' : 'counter-metric-blue rounded-lg'}`}> 
                     <span className="block text-2xl font-bold">{timeRemaining.months}</span>
                     <span className="text-gray-600 text-sm">{timeRemaining.months === 1 ? 'Mês' : 'Meses'}</span>
                   </div>
                 )}
-                <div className="bg-blue-100 p-3 rounded-lg">
+                 <div className={`counter-metric ${timeRemaining.past ? 'counter-metric-red rounded-lg' : 'counter-metric-blue rounded-lg'}`}> 
                   <span className="block text-2xl font-bold">{timeRemaining.days}</span>
                   <span className="text-gray-600 text-sm">{timeRemaining.days === 1 ? 'Dia' : 'Dias'}</span>
                 </div>
-                <div className="bg-blue-100 p-3 rounded-lg">
+                 <div className={`counter-metric ${timeRemaining.past ? 'counter-metric-red rounded-lg' : 'counter-metric-blue rounded-lg'}`}> 
                   <span className="block text-2xl font-bold">{timeRemaining.hours}</span>
                   <span className="text-gray-600 text-sm">{timeRemaining.hours === 1 ? 'Hora' : 'Horas'}</span>
                 </div>
-                <div className="bg-blue-100 p-3 rounded-lg">
+                 <div className={`counter-metric ${timeRemaining.past ? 'counter-metric-red rounded-lg' : 'counter-metric-blue rounded-lg'}`}> 
                   <span className="block text-2xl font-bold">{timeRemaining.minutes}</span>
                   <span className="text-gray-600 text-sm">{timeRemaining.minutes === 1 ? 'Min' : 'Mins'}</span>
                 </div>
-                <div className="bg-blue-100 p-3 rounded-lg">
+                 <div className={`counter-metric ${timeRemaining.past ? 'counter-metric-red rounded-lg' : 'counter-metric-blue rounded-lg'}`}> 
                   <span className="block text-2xl font-bold">{timeRemaining.seconds}</span>
                   <span className="text-gray-600 text-sm">{timeRemaining.seconds === 1 ? 'Seg' : 'Segs'}</span>
                 </div>
-              </div>
-            )}
+              </div>           
           </div>
           
           <div className="flex justify-between">

@@ -81,6 +81,11 @@ const Dashboard = () => {
     return matchesSearch && matchesCategory;
   });
 
+  // Ordenar por nome do contador (ordem alfabética)
+  const sortedCounters = [...filteredCounters].sort((a, b) =>
+    a.name.localeCompare(b.name, 'pt-BR', { sensitivity: 'base' })
+  );
+
   return (
     <div className="p-4">
       <div className="flex justify-between items-center mb-6 bg-gradient-to-r from-blue-500 to-indigo-600 p-4 rounded-lg shadow-md">
@@ -143,7 +148,7 @@ const Dashboard = () => {
         <div className="text-center py-8">
           <p className="text-gray-500">Carregando contadores...</p>
         </div>
-      ) : filteredCounters.length === 0 ? (
+      ) : sortedCounters.length === 0 ? (
         <div className="text-center py-8 bg-gray-50 rounded-lg shadow-sm">
           <p className="text-gray-500">Nenhum contador encontrado.</p>
           <button
@@ -155,7 +160,7 @@ const Dashboard = () => {
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredCounters.map(counter => (
+          {sortedCounters.map(counter => (
             <CounterCard
               key={counter._id}
               counter={counter}
