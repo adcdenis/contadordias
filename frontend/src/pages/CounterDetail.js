@@ -174,11 +174,6 @@ const CounterDetail = () => {
             <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">
               {counter.category}
             </span>
-            {counter.tags && counter.tags.map((tag, index) => (
-              <span key={index} className="inline-block bg-blue-100 rounded-full px-3 py-1 text-sm font-semibold text-blue-700 mr-2">
-                {tag}
-              </span>
-            ))}
           </div>
           
           {counter.description && (

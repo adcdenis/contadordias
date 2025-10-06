@@ -128,13 +128,7 @@ const CounterCard = ({ counter, onDelete, onToggleFavorite }) => {
         <p className="text-gray-700 mb-3 line-clamp-2">{description}</p>
       )}
 
-      {Array.isArray(counter.tags) && counter.tags.length > 0 && (
-        <div className="mb-3">
-          {counter.tags.slice(0, 3).map((tag, index) => (
-            <span key={index} className="counter-tag">{tag}</span>
-          ))}
-        </div>
-      )}
+      
       
       <div className="mt-2">
         <div className={`grid grid-cols-2 sm:grid-cols-3 ${isYearsVisible ? 'md:grid-cols-5' : 'md:grid-cols-4'} gap-3 text-center`}>

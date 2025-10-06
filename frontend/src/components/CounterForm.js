@@ -14,7 +14,6 @@ const CounterForm = ({ counter, onSubmit, onCancel, categories = [] }) => {
       : '00:00'
   );
   const [category, setCategory] = useState(counter?.category || 'Pessoal');
-  const [tags, setTags] = useState(counter?.tags?.join(', ') || '');
   const [error, setError] = useState('');
 
   const handleSubmit = (e) => {
@@ -25,10 +24,6 @@ const CounterForm = ({ counter, onSubmit, onCancel, categories = [] }) => {
       return;
     }
     
-    const formattedTags = tags
-      ? tags.split(',').map(tag => tag.trim()).filter(tag => tag)
-      : [];
-    
     // Combinar data e hora
     const combinedDateTime = new Date(`${eventDate}T${eventTime}`);
     
@@ -37,7 +32,6 @@ const CounterForm = ({ counter, onSubmit, onCancel, categories = [] }) => {
       description,
       eventDate: combinedDateTime,
       category,
-      tags: formattedTags,
       isFavorite: counter?.isFavorite || false
     });
   };
@@ -121,19 +115,7 @@ const CounterForm = ({ counter, onSubmit, onCancel, categories = [] }) => {
         </datalist>
       </div>
       
-      <div className="mb-6">
-        <label className="form-label" htmlFor="tags">
-          Tags (separadas por vírgula)
-        </label>
-        <input
-          id="tags"
-          type="text"
-          className="form-input"
-          value={tags}
-          onChange={(e) => setTags(e.target.value)}
-          placeholder="Ex: importante, trabalho, urgente"
-        />
-      </div>
+      
       
       <div className="flex justify-end space-x-2">
         <button
