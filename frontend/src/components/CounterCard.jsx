@@ -24,6 +24,7 @@ const CounterCard = ({ counter, onDelete }) => {
   
   const isPastEvent = timeDetails.past;
   const isYearsVisible = timeDetails.years > 0;
+  const isMonthVisible = timeDetails.months > 0;
   
   // Obter a distância de tempo formatada já está em timeDetails.formattedDistance
   
@@ -113,12 +114,18 @@ const CounterCard = ({ counter, onDelete }) => {
       </div>      
       
       <div className="mt-1">
-        <div className={`grid grid-cols-2 sm:grid-cols-3 ${isYearsVisible ? 'md:grid-cols-5' : 'md:grid-cols-4'} gap-2 text-center`}>
+        <div className={`grid grid-cols-2 sm:grid-cols-3 ${isYearsVisible ? 'md:grid-cols-6' : 'md:grid-cols-5'} gap-2 text-center`}>
           {isYearsVisible && (
             <div className={`counter-metric ${isPastEvent ? 'counter-metric-red' : 'counter-metric-blue'}`}>
               <span className="counter-metric-number">{timeDetails.years}</span>
               <span className="counter-metric-label">Anos</span>
             </div>
+          )}
+          {isMonthVisible && (
+          <div className={`counter-metric ${isPastEvent ? 'counter-metric-red' : 'counter-metric-blue'}`}>
+            <span className="counter-metric-number">{timeDetails.months}</span>
+            <span className="counter-metric-label">Meses</span>
+          </div>
           )}
           <div className={`counter-metric ${isPastEvent ? 'counter-metric-red' : 'counter-metric-blue'}`}>
             <span className="counter-metric-number">{timeDetails.days}</span>
