@@ -133,7 +133,7 @@ const CounterDetail = () => {
   }
 
   const eventDateObj = new Date(counter.eventDate);
-  const formattedDate = format(eventDateObj, "dd 'de' MMMM 'de' yyyy", { locale: pt });
+  const formattedDate = format(eventDateObj, "dd 'de' MMMM 'de' yyyy 'às' HH:mm", { locale: pt });
 
   return (
     <div>
