@@ -3,16 +3,22 @@ import React, { useState } from 'react';
 const CounterForm = ({ counter, onSubmit, onCancel, categories = [] }) => {
   const [name, setName] = useState(counter?.name || '');
   const [description, setDescription] = useState(counter?.description || '');
-  const [eventDate, setEventDate] = useState(
-    counter?.eventDate 
-      ? new Date(counter.eventDate).toISOString().split('T')[0]
-      : ''
-  );
-  const [eventTime, setEventTime] = useState(
-    counter?.eventDate 
-      ? new Date(counter.eventDate).toISOString().split('T')[1].substring(0, 5)
-      : '00:00'
-  );
+  // Inicializar data/hora em horário local (evitar deslocamento por UTC)
+  const [eventDate, setEventDate] = useState(() => {
+    if (!counter?.eventDate) return '';
+    const d = new Date(counter.eventDate);
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  });
+  const [eventTime, setEventTime] = useState(() => {
+    if (!counter?.eventDate) return '00:00';
+    const d = new Date(counter.eventDate);
+    const hours = String(d.getHours()).padStart(2, '0');
+    const minutes = String(d.getMinutes()).padStart(2, '0');
+    return `${hours}:${minutes}`;
+  });
   const [category, setCategory] = useState(counter?.category || 'Pessoal');
   const [error, setError] = useState('');
 
@@ -24,8 +30,10 @@ const CounterForm = ({ counter, onSubmit, onCancel, categories = [] }) => {
       return;
     }
     
-    // Combinar data e hora
-    const combinedDateTime = new Date(`${eventDate}T${eventTime}`);
+    // Combinar data e hora em horário LOCAL para evitar UTC shift
+    const [y, m, d] = eventDate.split('-').map(Number);
+    const [hh, mm] = eventTime.split(':').map(Number);
+    const combinedDateTime = new Date(y, m - 1, d, hh, mm);
     
     onSubmit({
       name,
