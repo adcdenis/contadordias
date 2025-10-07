@@ -1,11 +1,49 @@
 const Counter = require('../models/Counter');
 
+// Helper para avançar contadores recorrentes até uma data futura
+const advanceRecurringCounter = (counter) => {
+  const type = counter.recurrence || 'none';
+  if (type === 'none') return false;
+  let next = new Date(counter.eventDate);
+  const now = new Date();
+  let changed = false;
+  // Avançar enquanto a data do evento for passada ou igual ao agora
+  while (next <= now) {
+    if (type === 'weekly') {
+      next.setDate(next.getDate() + 7);
+    } else if (type === 'monthly') {
+      // Avançar um mês, preservando horário
+      const h = next.getHours();
+      const m = next.getMinutes();
+      const s = next.getSeconds();
+      const ms = next.getMilliseconds();
+      next.setMonth(next.getMonth() + 1);
+      next.setHours(h, m, s, ms);
+    } else if (type === 'yearly') {
+      next.setFullYear(next.getFullYear() + 1);
+    } else {
+      break;
+    }
+    changed = true;
+  }
+  if (changed) {
+    counter.eventDate = next;
+  }
+  return changed;
+};
+
 // @desc    Obter todos os contadores do usuário
 // @route   GET /api/counters
 // @access  Private
 exports.getCounters = async (req, res) => {
   try {
     const counters = await Counter.find({ user: req.user._id });
+    // Avançar contadores recorrentes automaticamente para próxima ocorrência
+    for (const counter of counters) {
+      if (advanceRecurringCounter(counter)) {
+        await counter.save();
+      }
+    }
     res.json(counters);
   } catch (error) {
     console.error(error);
@@ -29,6 +67,10 @@ exports.getCounterById = async (req, res) => {
       return res.status(403).json({ message: 'Não autorizado' });
     }
 
+    // Avançar contador recorrente automaticamente
+    if (advanceRecurringCounter(counter)) {
+      await counter.save();
+    }
     res.json(counter);
   } catch (error) {
     console.error(error);
@@ -41,7 +83,7 @@ exports.getCounterById = async (req, res) => {
 // @access  Private
 exports.createCounter = async (req, res) => {
   try {
-    const { name, description, eventDate, category, tags, isFavorite } = req.body;
+    const { name, description, eventDate, category, tags, isFavorite, recurrence } = req.body;
 
     const counter = new Counter({
       name,
@@ -50,6 +92,7 @@ exports.createCounter = async (req, res) => {
       category,
       tags,
       isFavorite,
+      recurrence: recurrence || 'none',
       user: req.user._id
     });
 
@@ -66,7 +109,7 @@ exports.createCounter = async (req, res) => {
 // @access  Private
 exports.updateCounter = async (req, res) => {
   try {
-    const { name, description, eventDate, category, tags, isFavorite } = req.body;
+    const { name, description, eventDate, category, tags, isFavorite, recurrence } = req.body;
 
     const counter = await Counter.findById(req.params.id);
 
@@ -85,6 +128,9 @@ exports.updateCounter = async (req, res) => {
     counter.category = category || counter.category;
     counter.tags = tags || counter.tags;
     counter.isFavorite = isFavorite !== undefined ? isFavorite : counter.isFavorite;
+    if (typeof recurrence === 'string') {
+      counter.recurrence = recurrence;
+    }
 
     const updatedCounter = await counter.save();
     res.json(updatedCounter);

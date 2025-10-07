@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { calculateDetailedTime } from '../utils/timeUtils';
 
 const CounterCard = ({ counter, onDelete }) => {
-  const { _id, name, description, eventDate, category } = counter;
+  const { _id, name, description, eventDate, category, recurrence } = counter;
   const [showConfirmDelete, setShowConfirmDelete] = useState(false);
   const [currentTime, setCurrentTime] = useState(new Date());
   const navigate = useNavigate();
@@ -109,8 +109,13 @@ const CounterCard = ({ counter, onDelete }) => {
         </div>
       )}
       
-      <div className="mb-2">
+      <div className="mb-2 flex items-center flex-wrap">
         <span className="counter-badge">{category}</span>
+        {recurrence && recurrence !== 'none' && (
+          <span className="counter-badge">
+            🔁 {recurrence === 'weekly' ? 'Semanal' : recurrence === 'monthly' ? 'Mensal' : 'Anual'}
+          </span>
+        )}
       </div>      
       
       <div className="mt-1">

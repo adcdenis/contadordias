@@ -20,6 +20,7 @@ const CounterForm = ({ counter, onSubmit, onCancel, categories = [] }) => {
     return `${hours}:${minutes}`;
   });
   const [category, setCategory] = useState(counter?.category || 'Pessoal');
+  const [recurrence, setRecurrence] = useState(counter?.recurrence || 'none');
   const [error, setError] = useState('');
 
   const handleSubmit = (e) => {
@@ -40,7 +41,8 @@ const CounterForm = ({ counter, onSubmit, onCancel, categories = [] }) => {
       description,
       eventDate: combinedDateTime,
       category,
-      isFavorite: counter?.isFavorite || false
+      isFavorite: counter?.isFavorite || false,
+      recurrence
     });
   };
 
@@ -121,6 +123,23 @@ const CounterForm = ({ counter, onSubmit, onCancel, categories = [] }) => {
             <option key={idx} value={c} />
           ))}
         </datalist>
+      </div>
+
+      <div className="mb-4">
+        <label className="form-label" htmlFor="recurrence">
+          Recorrência
+        </label>
+        <select
+          id="recurrence"
+          className="form-input"
+          value={recurrence}
+          onChange={(e) => setRecurrence(e.target.value)}
+        >
+          <option value="none">Nenhuma</option>
+          <option value="weekly">Semanal</option>
+          <option value="monthly">Mensal</option>
+          <option value="yearly">Anual</option>
+        </select>
       </div>
       
       

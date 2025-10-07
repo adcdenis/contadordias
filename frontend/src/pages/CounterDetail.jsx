@@ -157,6 +157,11 @@ const CounterDetail = () => {
             <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">
               {counter.category}
             </span>
+            {counter.recurrence && counter.recurrence !== 'none' && (
+              <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">
+                🔁 {counter.recurrence === 'weekly' ? 'Semanal' : counter.recurrence === 'monthly' ? 'Mensal' : 'Anual'}
+              </span>
+            )}
           </div>
           
           {counter.description && (

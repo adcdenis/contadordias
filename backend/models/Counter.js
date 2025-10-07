@@ -16,6 +16,11 @@ const CounterSchema = new mongoose.Schema({
     type: String,
     default: 'Geral'
   },
+  recurrence: {
+    type: String,
+    enum: ['none', 'weekly', 'monthly', 'yearly'],
+    default: 'none'
+  },
   tags: [String],
   isFavorite: {
     type: Boolean,
