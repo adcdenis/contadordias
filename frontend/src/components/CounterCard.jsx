@@ -118,30 +118,30 @@ const CounterCard = ({ counter, onDelete }) => {
           {isYearsVisible && (
             <div className={`counter-metric ${isPastEvent ? 'counter-metric-red' : 'counter-metric-blue'}`}>
               <span className="counter-metric-number">{timeDetails.years}</span>
-              <span className="counter-metric-label">Anos</span>
+              <span className="counter-metric-label">{timeDetails.years === 1 ? 'Ano' : 'Anos'}</span>
             </div>
           )}
           {isMonthVisible && (
           <div className={`counter-metric ${isPastEvent ? 'counter-metric-red' : 'counter-metric-blue'}`}>
             <span className="counter-metric-number">{timeDetails.months}</span>
-            <span className="counter-metric-label">Meses</span>
+            <span className="counter-metric-label">{timeDetails.months === 1 ? 'Mês' : 'Meses'}</span>
           </div>
           )}
           <div className={`counter-metric ${isPastEvent ? 'counter-metric-red' : 'counter-metric-blue'}`}>
             <span className="counter-metric-number">{timeDetails.days}</span>
-            <span className="counter-metric-label">Dias</span>
+            <span className="counter-metric-label">{timeDetails.days === 1 ? 'Dia' : 'Dias'}</span>
           </div>
           <div className={`counter-metric ${isPastEvent ? 'counter-metric-red' : 'counter-metric-blue'}`}>
             <span className="counter-metric-number">{timeDetails.hours}</span>
-            <span className="counter-metric-label">Horas</span>
+            <span className="counter-metric-label">{timeDetails.hours === 1 ? 'Hora' : 'Horas'}</span>
           </div>
           <div className={`counter-metric ${isPastEvent ? 'counter-metric-red' : 'counter-metric-blue'}`}>
             <span className="counter-metric-number">{timeDetails.minutes}</span>
-            <span className="counter-metric-label">Mins</span>
+            <span className="counter-metric-label">{timeDetails.minutes === 1 ? 'Min' : 'Mins'}</span>
           </div>
           <div className={`counter-metric ${isPastEvent ? 'counter-metric-red' : 'counter-metric-blue'}`}>
             <span className="counter-metric-number">{timeDetails.seconds}</span>
-            <span className="counter-metric-label">Segs</span>
+            <span className="counter-metric-label">{timeDetails.seconds === 1 ? 'Seg' : 'Segs'}</span>
           </div>
         </div>
         <p className="text-xs text-gray-600 mt-2">{formattedDate}</p>
