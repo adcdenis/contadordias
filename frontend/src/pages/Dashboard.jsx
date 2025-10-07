@@ -16,11 +16,10 @@ const Dashboard = () => {
   const [categories, setCategories] = useState([]);
   
 
-  // Buscar contadores
+  // Buscar contadores (sem alterar loading para evitar "refresh" visual em polling)
   const fetchCounters = async () => {
     try {
-      setLoading(true);
-    const response = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/counters`);
+      const response = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/counters`);
       setCounters(response.data);
       
       // Extrair categorias únicas
@@ -31,23 +30,31 @@ const Dashboard = () => {
     } catch (err) {
       setError('Erro ao carregar contadores');
       console.error(err);
-    } finally {
-      setLoading(false);
     }
   };
 
   useEffect(() => {
     // Aguarda o usuário estar disponível (login concluído)
     if (!user) return;
+    let cancelled = false;
+
+    // Carregamento inicial com indicador visual
+    const loadInitial = async () => {
+      setLoading(true);
+      await fetchCounters();
+      if (!cancelled) setLoading(false);
+    };
+    loadInitial();
     
-    fetchCounters();
-    
-    // Atualizar contadores a cada minuto
+    // Atualizar contadores a cada minuto (sem alterar loading)
     const interval = setInterval(() => {
       fetchCounters();
     }, 60000);
     
-    return () => clearInterval(interval);
+    return () => {
+      cancelled = true;
+      clearInterval(interval);
+    };
   }, [user]);
 
   // Adicionar novo contador
