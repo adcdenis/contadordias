@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useToast } from '../context/ToastContext';
 
 const AdminPanel = () => {
   const [users, setUsers] = useState([]);
@@ -9,6 +10,8 @@ const AdminPanel = () => {
   const [newPassword, setNewPassword] = useState('');
   const [saving, setSaving] = useState(false);
   const [confirmDeleteUser, setConfirmDeleteUser] = useState(null);
+
+  const { showToast } = useToast();
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -38,6 +41,7 @@ const AdminPanel = () => {
       await axios.delete(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/users/${confirmDeleteUser._id}`);
       setUsers(users.filter(u => u._id !== confirmDeleteUser._id));
       setConfirmDeleteUser(null);
+      showToast('Usuário excluído com sucesso');
     } catch (err) {
       setError('Erro ao excluir usuário');
       console.error(err);
@@ -70,7 +74,7 @@ const AdminPanel = () => {
         password: newPassword
       });
       cancelEditPassword();
-      alert('Senha atualizada com sucesso');
+      showToast('Senha atualizada com sucesso');
     } catch (err) {
       setError('Erro ao atualizar senha');
       console.error(err);

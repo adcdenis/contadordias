@@ -5,10 +5,12 @@ import { format } from 'date-fns';
 import { pt } from 'date-fns/locale';
 import CounterForm from '../components/CounterForm';
 import { calculateDetailedTime } from '../utils/timeUtils';
+import { useToast } from '../context/ToastContext';
 
 const CounterDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { showToast } = useToast();
   const [counter, setCounter] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -75,6 +77,8 @@ const CounterDetail = () => {
       setCounter(response.data);
       setEditing(false);
       calculateTimeRemaining(new Date(response.data.eventDate));
+      showToast('Contador atualizado com sucesso');
+      navigate('/dashboard');
     } catch (err) {
       setError('Erro ao atualizar contador');
       console.error(err);
@@ -86,6 +90,7 @@ const CounterDetail = () => {
     if (window.confirm('Tem certeza que deseja excluir este contador?')) {
       try {
     await axios.delete(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/counters/${id}`);
+        showToast('Contador excluído com sucesso');
         navigate('/dashboard');
       } catch (err) {
         setError('Erro ao excluir contador');

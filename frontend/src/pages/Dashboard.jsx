@@ -3,9 +3,11 @@ import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 import CounterCard from '../components/CounterCard';
 import CounterForm from '../components/CounterForm';
+import { useToast } from '../context/ToastContext';
 
 const Dashboard = () => {
   const { user } = useAuth();
+  const { showToast } = useToast();
 
   const [counters, setCounters] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -63,6 +65,7 @@ const Dashboard = () => {
     await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/counters`, counterData);
       fetchCounters();
       setShowForm(false);
+      showToast('Contador criado com sucesso');
     } catch (err) {
       setError('Erro ao adicionar contador');
       console.error(err);
@@ -74,6 +77,7 @@ const Dashboard = () => {
     try {
     await axios.delete(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/counters/${id}`);
       fetchCounters();
+      showToast('Contador excluído com sucesso');
     } catch (err) {
       setError('Erro ao excluir contador');
       console.error(err);

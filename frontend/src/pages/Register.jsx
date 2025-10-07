@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { useToast } from '../context/ToastContext';
 
 const Register = () => {
   const [name, setName] = useState('');
@@ -12,6 +13,7 @@ const Register = () => {
   
   const { register } = useAuth();
   const navigate = useNavigate();
+  const { showToast } = useToast();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -33,6 +35,7 @@ const Register = () => {
       const result = await register(name, email, password);
       
       if (result.success) {
+        showToast('Cadastro realizado com sucesso');
         navigate('/dashboard');
       } else {
         setError(result.message);
