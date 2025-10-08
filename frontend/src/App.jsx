@@ -9,6 +9,7 @@ import Dashboard from './pages/Dashboard';
 import CounterDetail from './pages/CounterDetail';
 import AdminPanel from './pages/AdminPanel';
 import NotFound from './pages/NotFound';
+import Summary from './pages/Summary';
 
 // Componentes
 import Header from './components/Header';
@@ -32,6 +33,12 @@ function App() {
             <Route path="/dashboard" element={
               <PrivateRoute>
                 <Dashboard />
+              </PrivateRoute>
+            } />
+
+            <Route path="/resumo" element={
+              <PrivateRoute>
+                <Summary />
               </PrivateRoute>
             } />
             

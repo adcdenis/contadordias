@@ -37,6 +37,9 @@ const Header = () => {
               <Link to="/dashboard" className="px-3 py-2 rounded hover:bg-blue-700 mr-2">
                 Dashboard
               </Link>
+              <Link to="/resumo" className="px-3 py-2 rounded hover:bg-blue-700 mr-2">
+                Resumo
+              </Link>
               
               {isAdmin && (
                 <Link to="/admin" className="px-3 py-2 rounded hover:bg-blue-700 mr-2">
