@@ -10,6 +10,7 @@ import CounterDetail from './pages/CounterDetail';
 import AdminPanel from './pages/AdminPanel';
 import NotFound from './pages/NotFound';
 import Summary from './pages/Summary';
+import Home from './pages/Home';
 
 // Componentes
 import Header from './components/Header';
@@ -26,7 +27,7 @@ function App() {
         <Header />
         <main className="flex-grow container mx-auto px-4 py-8">
           <Routes>
-            <Route path="/" element={user ? <Navigate to="/dashboard" /> : <Login />} />
+            <Route path="/" element={<Home />} />
             <Route path="/login" element={user ? <Navigate to="/dashboard" /> : <Login />} />
             <Route path="/register" element={user ? <Navigate to="/dashboard" /> : <Register />} />
             
