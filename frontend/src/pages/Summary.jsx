@@ -34,13 +34,13 @@ const CategoryBarChart = ({ data }) => {
         return (
           <g key={label} transform={`translate(0, ${y})`}>
             {/* label */}
-            <text x={4} y={barHeight / 2} dominantBaseline="middle" className="text-xs fill-gray-700">
+            <text x={4} y={barHeight / 2} dominantBaseline="middle" className="text-sm fill-gray-700">
               {label}
             </text>
             {/* barra */}
             <rect x={leftLabelWidth} y={4} width={Math.max(4, w)} height={barHeight - 8} rx={6} className="fill-blue-500" />
             {/* valor */}
-            <text x={leftLabelWidth + chartWidth + 6} y={barHeight / 2} dominantBaseline="middle" className="text-xs fill-gray-700">
+            <text x={leftLabelWidth + chartWidth + 6} y={barHeight / 2} dominantBaseline="middle" className="text-sm fill-gray-700">
               {formatNumber(value)}
             </text>
           </g>
@@ -93,7 +93,7 @@ const CategoryPieChart = ({ data }) => {
         {/* círculo interno para suavizar centro */}
         <circle cx={cx} cy={cy} r={innerR-1} fill="white" />
       </svg>
-      <div className="text-xs">
+      <div className="text-sm">
         {segments.map((s) => (
           <div key={s.label} className="flex items-center gap-2 py-0.5">
             <span className="inline-block w-3 h-3 rounded" style={{ backgroundColor: s.color }}></span>

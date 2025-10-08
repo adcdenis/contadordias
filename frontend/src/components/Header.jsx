@@ -1,12 +1,24 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import Tooltip from './Tooltip';
 
 const Header = () => {
   const { user, logout, isAdmin } = useAuth();
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef(null);
+
+  // Util para obter iniciais do nome do usuário
+  const getInitials = (name) => {
+    if (!name || typeof name !== 'string') return '';
+    return name
+      .trim()
+      .split(/\s+/)
+      .slice(0, 2)
+      .map((part) => part.charAt(0).toUpperCase())
+      .join('');
+  };
 
   const handleLogout = () => {
     logout();
@@ -54,7 +66,14 @@ const Header = () => {
                   aria-haspopup="menu"
                   aria-expanded={menuOpen}
                 >
-                  <span className="mr-1">{user.name}</span>
+                  <Tooltip content={user.name}>
+                    <span
+                      className="mr-1 inline-flex items-center justify-center w-8 h-8 bg-white text-blue-600 font-semibold rounded-full"
+                      aria-label={user.name}
+                    >
+                      {getInitials(user.name)}
+                    </span>
+                  </Tooltip>
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                   </svg>
