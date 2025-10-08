@@ -30,6 +30,20 @@ const CounterForm = ({ counter, onSubmit, onCancel, categories = [] }) => {
       setError('Nome e data do evento são obrigatórios');
       return;
     }
+
+    // Limites de caracteres
+    if (name.length > 200) {
+      setError('Nome deve ter no máximo 200 caracteres');
+      return;
+    }
+    if (description.length > 1000) {
+      setError('Descrição deve ter no máximo 1000 caracteres');
+      return;
+    }
+    if (category.length > 100) {
+      setError('Categoria deve ter no máximo 100 caracteres');
+      return;
+    }
     
     // Combinar data e hora em horário LOCAL para evitar UTC shift
     const [y, m, d] = eventDate.split('-').map(Number);
@@ -64,8 +78,10 @@ const CounterForm = ({ counter, onSubmit, onCancel, categories = [] }) => {
           className="form-input"
           value={name}
           onChange={(e) => setName(e.target.value)}
+          maxLength={200}
           required
         />
+        <p className="text-xs text-gray-500 mt-1 text-right">{name.length}/200</p>
       </div>
       
       <div className="mb-4">
@@ -78,7 +94,9 @@ const CounterForm = ({ counter, onSubmit, onCancel, categories = [] }) => {
           rows="3"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
+          maxLength={1000}
         />
+        <p className="text-xs text-gray-500 mt-1 text-right">{description.length}/1000</p>
       </div>
       
       <div className="mb-4">
@@ -117,7 +135,9 @@ const CounterForm = ({ counter, onSubmit, onCancel, categories = [] }) => {
           onChange={(e) => setCategory(e.target.value)}
           list="category-options"
           placeholder="Digite ou escolha uma categoria"
+          maxLength={100}
         />
+        <p className="text-xs text-gray-500 mt-1 text-right">{category.length}/100</p>
         <datalist id="category-options">
           {Array.isArray(categories) && categories.map((c, idx) => (
             <option key={idx} value={c} />
