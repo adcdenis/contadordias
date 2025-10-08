@@ -72,6 +72,11 @@ body {
   @apply inline-flex items-center justify-center h-7 w-7 text-sm rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 shadow-sm transition-colors;
 }
 
+/* Ícone maior dentro dos botões de ação dos cards */
+.counter-icon {
+  @apply text-xl leading-none;
+}
+
 .counter-badge {
   @apply inline-block bg-gray-100 text-gray-700 rounded-full px-3 py-1 text-xs font-medium mr-2;
 }

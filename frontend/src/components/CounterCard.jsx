@@ -70,7 +70,7 @@ const CounterCard = ({ counter, onDelete }) => {
             onClick={(e) => e.stopPropagation()}
             title="Ver detalhes"
           >
-            <span>👁️</span>
+            <span className="counter-icon">👁️</span>
           </Link>
           <Link
             to={`/counter/${_id}?edit=1`}
@@ -78,7 +78,7 @@ const CounterCard = ({ counter, onDelete }) => {
             onClick={(e) => e.stopPropagation()}
             title="Editar"
           >
-            <span>✏️</span>
+            <span className="counter-icon">✏️</span>
           </Link>
           <button
             onClick={(e) => {
@@ -88,7 +88,7 @@ const CounterCard = ({ counter, onDelete }) => {
             className="counter-action-btn text-red-600 hover:text-red-700"
             title="Excluir"
           >
-            <span>🗑️</span>
+            <span className="counter-icon">🗑️</span>
           </button>
         </div>
       </div>
