@@ -72,6 +72,14 @@ const CounterCard = ({ counter, onDelete }) => {
           >
             <span>👁️</span>
           </Link>
+          <Link
+            to={`/counter/${_id}?edit=1`}
+            className="counter-action-btn text-green-600 hover:text-green-700"
+            onClick={(e) => e.stopPropagation()}
+            title="Editar"
+          >
+            <span>✏️</span>
+          </Link>
           <button
             onClick={(e) => {
               e.stopPropagation();
@@ -87,19 +95,25 @@ const CounterCard = ({ counter, onDelete }) => {
       
       {/* Modal de confirmação de exclusão */}
       {showConfirmDelete && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full">
+        <div 
+          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <div 
+            className="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full"
+            onClick={(e) => e.stopPropagation()}
+          >
             <h3 className="text-xl font-bold mb-4">Confirmar exclusão</h3>
             <p className="mb-6">Tem certeza que deseja excluir o contador "{name}"?</p>
             <div className="flex justify-end space-x-3">
               <button 
-                onClick={cancelDelete}
+                onClick={(e) => { e.stopPropagation(); cancelDelete(); }}
                 className="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-lg transition-colors"
               >
                 Cancelar
               </button>
               <button 
-                onClick={confirmDelete}
+                onClick={(e) => { e.stopPropagation(); confirmDelete(); }}
                 className="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg transition-colors"
               >
                 Excluir

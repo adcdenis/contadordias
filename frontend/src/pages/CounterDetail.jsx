@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { format } from 'date-fns';
 import { pt } from 'date-fns/locale';
@@ -10,11 +10,13 @@ import { useToast } from '../context/ToastContext';
 const CounterDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
   const { showToast } = useToast();
   const [counter, setCounter] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [editing, setEditing] = useState(false);
+  const initialEditing = new URLSearchParams(location.search).get('edit') === '1';
+  const [editing, setEditing] = useState(initialEditing);
   const [timeRemaining, setTimeRemaining] = useState({});
   const [categories, setCategories] = useState([]);
 
@@ -148,7 +150,7 @@ const CounterDetail = () => {
           <CounterForm 
             counter={counter} 
             onSubmit={handleUpdateCounter} 
-            onCancel={() => setEditing(false)} 
+            onCancel={() => navigate('/dashboard')} 
             categories={categories}
           />
         </div>
@@ -222,20 +224,21 @@ const CounterDetail = () => {
                 className="btn btn-primary mr-2"
               >
                 Voltar
-              </button>
-              <button
-                onClick={() => setEditing(true)}
-                className="btn btn-success"
-              >
-                Editar
-              </button>
+              </button>             
             </div>
-            <button
+             <button
               onClick={handleDeleteCounter}
               className="btn btn-danger"
             >
               Excluir
             </button>
+            <button
+                onClick={() => setEditing(true)}
+                className="btn btn-success"
+              >
+                Editar
+              </button>
+            
           </div>
         </div>
       )}
