@@ -54,6 +54,15 @@ export const counterAPI = {
   delete: async (id) => {
     const response = await axios.delete(`${API_URL}/counters/${id}`);
     return response.data;
+  },
+  export: async () => {
+    const response = await axios.get(`${API_URL}/counters/export`);
+    return response.data;
+  },
+  import: async (items) => {
+    const payload = Array.isArray(items) ? { items } : items;
+    const response = await axios.post(`${API_URL}/counters/import`, payload);
+    return response.data;
   }
 };
 

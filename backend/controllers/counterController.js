@@ -83,15 +83,13 @@ exports.getCounterById = async (req, res) => {
 // @access  Private
 exports.createCounter = async (req, res) => {
   try {
-    const { name, description, eventDate, category, tags, isFavorite, recurrence } = req.body;
+    const { name, description, eventDate, category, recurrence } = req.body;
 
     const counter = new Counter({
       name,
       description,
       eventDate,
       category,
-      tags,
-      isFavorite,
       recurrence: recurrence || 'none',
       user: req.user._id
     });
@@ -109,7 +107,7 @@ exports.createCounter = async (req, res) => {
 // @access  Private
 exports.updateCounter = async (req, res) => {
   try {
-    const { name, description, eventDate, category, tags, isFavorite, recurrence } = req.body;
+    const { name, description, eventDate, category, recurrence } = req.body;
 
     const counter = await Counter.findById(req.params.id);
 
@@ -126,8 +124,6 @@ exports.updateCounter = async (req, res) => {
     counter.description = description !== undefined ? description : counter.description;
     counter.eventDate = eventDate || counter.eventDate;
     counter.category = category || counter.category;
-    counter.tags = tags || counter.tags;
-    counter.isFavorite = isFavorite !== undefined ? isFavorite : counter.isFavorite;
     if (typeof recurrence === 'string') {
       counter.recurrence = recurrence;
     }
@@ -161,5 +157,102 @@ exports.deleteCounter = async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Erro no servidor' });
+  }
+};
+
+// @desc    Exportar contadores do usuário logado em JSON
+// @route   GET /api/counters/export
+// @access  Private
+exports.exportCounters = async (req, res) => {
+  try {
+    const counters = await Counter.find({ user: req.user._id });
+    const toISO = (d) => {
+      try {
+        if (!d) return null;
+        const date = new Date(d);
+        return isNaN(date.getTime()) ? null : date.toISOString();
+      } catch (_) {
+        return null;
+      }
+    };
+    const payload = counters.map((c) => ({
+      name: c.name,
+      description: c.description || '',
+      eventDate: toISO(c.eventDate),
+      category: c.category || 'Geral',
+      recurrence: c.recurrence || 'none',
+      // campo removido: isFavorite
+    }));
+    res.json({ items: payload, total: payload.length });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Erro ao exportar contadores' });
+  }
+};
+
+// @desc    Importar contadores (atualiza por nome ou cria novos) para usuário
+// @route   POST /api/counters/import
+// @access  Private
+exports.importCounters = async (req, res) => {
+  try {
+    const data = Array.isArray(req.body.items) ? req.body.items : req.body;
+
+    if (!Array.isArray(data)) {
+      return res.status(400).json({ message: 'Formato inválido: esperado array de itens ou { items: [] }' });
+    }
+
+    let created = 0;
+    let updated = 0;
+    const errors = [];
+
+    for (let i = 0; i < data.length; i++) {
+      const item = data[i] || {};
+      const name = (item.name || '').trim();
+
+      if (!name) {
+        errors.push({ index: i, name: item.name, error: 'Nome do evento ausente' });
+        continue;
+      }
+
+      try {
+        const existing = await Counter.findOne({ user: req.user._id, name });
+
+        const payload = {
+          description: item.description || '',
+          eventDate: item.eventDate ? new Date(item.eventDate) : new Date(),
+          category: item.category || 'Geral',
+          recurrence: item.recurrence || 'none',
+          user: req.user._id
+        };
+
+        if (existing) {
+          existing.set({
+            name,
+            description: payload.description,
+            eventDate: payload.eventDate,
+            category: payload.category,
+            recurrence: payload.recurrence
+          });
+          await existing.save();
+          updated += 1;
+        } else {
+          const createdCounter = new Counter({
+            name,
+            ...payload
+          });
+          await createdCounter.save();
+          created += 1;
+        }
+      } catch (err) {
+        console.error('Erro ao processar item de importação:', err);
+        errors.push({ index: i, name, error: 'Falha ao importar item' });
+      }
+    }
+
+    const total = data.length;
+    res.json({ total, created, updated, errorsCount: errors.length, errors, success: errors.length === 0 });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Erro ao importar contadores' });
   }
 };

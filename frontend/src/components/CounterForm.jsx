@@ -55,7 +55,6 @@ const CounterForm = ({ counter, onSubmit, onCancel, categories = [] }) => {
       description,
       eventDate: combinedDateTime,
       category,
-      isFavorite: counter?.isFavorite || false,
       recurrence
     });
   };

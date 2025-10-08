@@ -6,8 +6,7 @@ Uma aplicação web para acompanhar eventos importantes da sua vida, permitindo 
 
 - **Autenticação de Usuários**: Registro, login e gerenciamento de perfil
 - **Gerenciamento de Contadores**: Criar, visualizar, editar e excluir contadores de dias
-- **Categorização**: Organizar contadores por categorias e tags
-- **Favoritos**: Marcar contadores importantes como favoritos
+ - **Categorização**: Organizar contadores por categorias
 - **Contagem em Tempo Real**: Visualização de dias, horas, minutos e segundos
 - **Painel Administrativo**: Gerenciamento de usuários (apenas para administradores)
 - **Interface Responsiva**: Experiência otimizada em dispositivos móveis e desktop
@@ -103,7 +102,7 @@ Aplicativo web responsivo para gerenciar contadores de tempo (countdowns/countup
 - Sistema de autenticação de usuários
 - Interface responsiva para desktop e dispositivos móveis
 - Categorização e filtragem de contadores
-- Recursos extras: favoritos, categorias personalizadas
+- Recursos extras: categorias personalizadas
 
 ## Tecnologias Utilizadas
 

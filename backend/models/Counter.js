@@ -21,11 +21,6 @@ const CounterSchema = new mongoose.Schema({
     enum: ['none', 'weekly', 'monthly', 'yearly'],
     default: 'none'
   },
-  tags: [String],
-  isFavorite: {
-    type: Boolean,
-    default: false
-  },
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',

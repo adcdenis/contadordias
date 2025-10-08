@@ -51,7 +51,7 @@ const Home = () => {
           </div>
           <h2 className="text-xl font-bold mb-2">Organize por Categorias</h2>
           <p className="text-gray-600">
-            Classifique seus contadores por categorias e tags para manter tudo organizado.
+            Classifique seus contadores por categorias para manter tudo organizado.
           </p>
         </div>
         

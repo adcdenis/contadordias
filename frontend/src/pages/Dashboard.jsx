@@ -116,14 +116,27 @@ const Dashboard = () => {
       )}
 
       <div className="mb-6 flex flex-col md:flex-row gap-4">
-        <div className="w-full md:w-1/2">
+        <div className="w-full md:w-1/2 flex items-center">
           <input
             type="text"
             placeholder="Buscar por nome..."
-            className="form-input"
+            className="form-input w-full"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
+          {searchTerm && (
+            <button
+              type="button"
+              aria-label="Limpar busca"
+              title="Limpar busca"
+              onClick={() => setSearchTerm('')}
+              className="ml-2 bg-red-600 hover:bg-red-700 text-white rounded-full w-8 h-8 flex items-center justify-center shadow-sm"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4">
+                <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+              </svg>
+            </button>
+          )}
         </div>
         <div className="w-full md:w-1/4">
           <select

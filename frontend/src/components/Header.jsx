@@ -52,6 +52,9 @@ const Header = () => {
               <Link to="/resumo" className="px-3 py-2 rounded hover:bg-blue-700 mr-2">
                 Resumo
               </Link>
+              <Link to="/importar-exportar" className="px-3 py-2 rounded hover:bg-blue-700 mr-2">
+                Importar/Exportar
+              </Link>
               
               {isAdmin && (
                 <Link to="/admin" className="px-3 py-2 rounded hover:bg-blue-700 mr-2">
