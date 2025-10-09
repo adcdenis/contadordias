@@ -257,8 +257,8 @@ const CounterForm = ({ counter, onSubmit, onCancel, onDelete, categories = [] })
         </select>
       </div>
       
-      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 sm:gap-3">
-        <div className="order-2 sm:order-1 w-full sm:w-auto">
+      <div className="flex flex-row justify-between items-center flex-wrap gap-2">
+        <div className="w-auto">
           {onDelete && (
             <button
               type="button"
@@ -272,7 +272,7 @@ const CounterForm = ({ counter, onSubmit, onCancel, onDelete, categories = [] })
             </button>
           )}
         </div>
-        <div className="flex flex-wrap gap-2 w-full sm:w-auto order-1 sm:order-2 justify-end">
+        <div className="flex gap-2 w-auto justify-end">
           <button
             type="button"
             className="btn btn-danger inline-flex items-center gap-2 text-sm px-3 py-1.5 sm:text-base sm:px-4 sm:py-2"
