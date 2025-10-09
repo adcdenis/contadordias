@@ -166,7 +166,7 @@ const CounterForm = ({ counter, onSubmit, onCancel, onDelete, categories = [] })
           {onDelete && (
             <button
               type="button"
-              className="btn btn-danger inline-flex items-center gap-2 w-full sm:w-auto"
+              className="btn btn-danger inline-flex items-center gap-2 text-sm px-3 py-1.5 sm:text-base sm:px-4 sm:py-2"
               onClick={onDelete}
             >
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
@@ -179,7 +179,7 @@ const CounterForm = ({ counter, onSubmit, onCancel, onDelete, categories = [] })
         <div className="flex flex-wrap gap-2 w-full sm:w-auto order-1 sm:order-2 justify-end">
           <button
             type="button"
-            className="btn btn-danger inline-flex items-center gap-2 w-full sm:w-auto"
+            className="btn btn-danger inline-flex items-center gap-2 text-sm px-3 py-1.5 sm:text-base sm:px-4 sm:py-2"
             onClick={onCancel}
           >
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
@@ -189,7 +189,7 @@ const CounterForm = ({ counter, onSubmit, onCancel, onDelete, categories = [] })
           </button>
           <button
             type="submit"
-            className="btn btn-primary inline-flex items-center gap-2 w-full sm:w-auto"
+            className="btn btn-primary inline-flex items-center gap-2 text-sm px-3 py-1.5 sm:text-base sm:px-4 sm:py-2"
           >
             {counter ? (
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" className="w-4 h-4" strokeWidth="2">
