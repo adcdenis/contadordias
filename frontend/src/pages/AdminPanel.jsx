@@ -181,25 +181,46 @@ const AdminPanel = () => {
                   <td className="px-3 py-2 sm:px-6 sm:py-4 whitespace-nowrap text-right text-xs sm:text-sm font-medium">
                     <button
                       onClick={() => openEditPassword(user._id)}
-                      className="text-blue-600 hover:text-blue-900 mr-2 sm:mr-4"
+                      className="text-blue-600 hover:text-blue-900 mr-2 sm:mr-4 inline-flex items-center gap-1"
                       title="Editar senha"
                     >
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
+                        <path d="M16.862 3.487a2.25 2.25 0 013.182 3.182l-9.193 9.193a2.25 2.25 0 01-.948.564l-3.307.943a.75.75 0 01-.925-.925l.943-3.307a2.25 2.25 0 01.564-.948l9.193-9.193z" />
+                        <path d="M19.5 10.125L13.875 4.5" />
+                      </svg>
                       Editar Senha
                     </button>
                     <button
                       onClick={() => openConfirmRoleChange(user)}
-                      className="text-indigo-600 hover:text-indigo-900 mr-2 sm:mr-4"
+                      className="text-indigo-600 hover:text-indigo-900 mr-2 sm:mr-4 inline-flex items-center gap-1"
                       disabled={currentUser && user._id === currentUser._id}
                       title={currentUser && user._id === currentUser._id ? "Não é possível alterar sua própria função" : (user.role === 'admin' ? "Rebaixar para Usuário" : "Promover a Admin")}
                     >
-                      {user.role === 'admin' ? 'Rebaixar' : 'Promover'}
+                      {user.role === 'admin' ? (
+                        <>
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
+                            <path fillRule="evenodd" d="M12 3.75a.75.75 0 01.75.75v12.19l3.22-3.22a.75.75 0 111.06 1.06l-4.5 4.5a.75.75 0 01-1.06 0l-4.5-4.5a.75.75 0 111.06-1.06l3.22 3.22V4.5a.75.75 0 01.75-.75z" clipRule="evenodd" />
+                          </svg>
+                          Rebaixar
+                        </>
+                      ) : (
+                        <>
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
+                            <path fillRule="evenodd" d="M12 20.25a.75.75 0 01-.75-.75V7.31l-3.22 3.22a.75.75 0 11-1.06-1.06l4.5-4.5a.75.75 0 011.06 0l4.5 4.5a.75.75 0 11-1.06 1.06L12.75 7.31v12.19a.75.75 0 01-.75.75z" clipRule="evenodd" />
+                          </svg>
+                          Promover
+                        </>
+                      )}
                     </button>
                     <button
                       onClick={() => openConfirmDelete(user)}
-                      className="text-red-600 hover:text-red-900"
+                      className="text-red-600 hover:text-red-900 inline-flex items-center gap-1"
                       disabled={user.role === 'admin'}
                       title={user.role === 'admin' ? "Não é possível excluir um administrador" : "Excluir usuário"}
                     >
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
+                        <path d="M9 3.75A.75.75 0 019.75 3h4.5a.75.75 0 01.75.75V5.25H18a.75.75 0 010 1.5h-.592l-.563 12.33A2.25 2.25 0 0114.6 21H9.4a2.25 2.25 0 01-2.245-1.92L6.592 6.75H6a.75.75 0 010-1.5h2.25V3.75zM8.095 6.75l.522 11.423a.75.75 0 00.748.677h5.27a.75.75 0 00.747-.677L16.905 6.75H8.095z" />
+                      </svg>
                       Excluir
                     </button>
                   </td>
@@ -217,16 +238,28 @@ const AdminPanel = () => {
                         />
                         <button
                           onClick={() => handleUpdatePassword(user._id)}
-                          className="btn btn-primary"
+                          className="btn btn-primary inline-flex items-center gap-2"
                           disabled={saving}
                         >
-                          {saving ? 'Salvando...' : 'Salvar'}
+                          {saving ? (
+                            'Salvando...'
+                          ) : (
+                            <>
+                              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" className="w-4 h-4" strokeWidth="2">
+                                <path d="M5 13l4 4L19 7" />
+                              </svg>
+                              Salvar
+                            </>
+                          )}
                         </button>
                         <button
                           onClick={cancelEditPassword}
-                          className="btn"
+                          className="btn btn-danger inline-flex items-center gap-2"
                           disabled={saving}
                         >
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
+                            <path fillRule="evenodd" d="M12 2.25a9.75 9.75 0 100 19.5 9.75 9.75 0 000-19.5zM9.53 8.47a.75.75 0 10-1.06 1.06L10.44 12l-1.97 1.97a.75.75 0 101.06 1.06L11.5 13.06l1.97 1.97a.75.75 0 101.06-1.06L12.56 12l1.97-1.97a.75.75 0 10-1.06-1.06L11.5 10.94 9.53 8.97z" clipRule="evenodd" />
+                          </svg>
                           Cancelar
                         </button>
                       </div>
@@ -255,8 +288,18 @@ const AdminPanel = () => {
               Tem certeza que deseja excluir o usuário <span className="font-medium">{confirmDeleteUser.name}</span>? Esta ação não pode ser desfeita.
             </p>
             <div className="flex justify-end gap-3">
-              <button onClick={cancelDelete} className="btn">Cancelar</button>
-              <button onClick={confirmDelete} className="btn btn-danger">Excluir</button>
+              <button onClick={cancelDelete} className="btn inline-flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
+                  <path fillRule="evenodd" d="M12 2.25a9.75 9.75 0 100 19.5 9.75 9.75 0 000-19.5zM9.53 8.47a.75.75 0 10-1.06 1.06L10.44 12l-1.97 1.97a.75.75 0 101.06 1.06L11.5 13.06l1.97 1.97a.75.75 0 101.06-1.06L12.56 12l1.97-1.97a.75.75 0 10-1.06-1.06L11.5 10.94 9.53 8.97z" clipRule="evenodd" />
+                </svg>
+                Cancelar
+              </button>
+              <button onClick={confirmDelete} className="btn btn-danger inline-flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
+                  <path d="M9 3.75A.75.75 0 019.75 3h4.5a.75.75 0 01.75.75V5.25H18a.75.75 0 010 1.5h-.592l-.563 12.33A2.25 2.25 0 0114.6 21H9.4a2.25 2.25 0 01-2.245-1.92L6.592 6.75H6a.75.75 0 010-1.5h2.25V3.75zM8.095 6.75l.522 11.423a.75.75 0 00.748.677h5.27a.75.75 0 00.747-.677L16.905 6.75H8.095z" />
+                </svg>
+                Excluir
+              </button>
             </div>
           </div>
         </div>

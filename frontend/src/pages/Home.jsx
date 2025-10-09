@@ -15,15 +15,25 @@ const Home = () => {
         </p>
         
         {user ? (
-          <Link to="/dashboard" className="btn btn-primary text-lg px-8 py-3">
+          <Link to="/dashboard" className="btn btn-primary text-lg px-8 py-3 inline-flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
+              <path fillRule="evenodd" d="M4.5 12a.75.75 0 01.75-.75h11.19l-3.22-3.22a.75.75 0 111.06-1.06l4.5 4.5a.75.75 0 010 1.06l-4.5 4.5a.75.75 0 11-1.06-1.06l3.22-3.22H5.25A.75.75 0 014.5 12z" clipRule="evenodd" />
+            </svg>
             Ir para o Dashboard
           </Link>
         ) : (
           <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <Link to="/login" className="btn btn-primary text-lg px-8 py-3">
+            <Link to="/login" className="btn btn-primary text-lg px-8 py-3 inline-flex items-center gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
+                <path fillRule="evenodd" d="M3.75 12a.75.75 0 01.75-.75h9.19l-3.22-3.22a.75.75 0 111.06-1.06l4.5 4.5a.75.75 0 010 1.06l-4.5 4.5a.75.75 0 11-1.06-1.06l3.22-3.22H4.5a.75.75 0 01-.75-.75z" clipRule="evenodd" />
+              </svg>
               Entrar
             </Link>
-            <Link to="/register" className="btn btn-success text-lg px-8 py-3">
+            <Link to="/register" className="btn btn-success text-lg px-8 py-3 inline-flex items-center gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
+                <path fillRule="evenodd" d="M12 2.25a5.25 5.25 0 100 10.5 5.25 5.25 0 000-10.5zM4.5 20.25a7.5 7.5 0 0115 0 .75.75 0 01-.75.75h-13.5a.75.75 0 01-.75-.75z" clipRule="evenodd" />
+                <path d="M19.5 8.25h1.5a.75.75 0 010 1.5h-1.5v1.5a.75.75 0 01-1.5 0v-1.5h-1.5a.75.75 0 010-1.5h1.5v-1.5a.75.75 0 011.5 0v1.5z" />
+              </svg>
               Registrar
             </Link>
           </div>

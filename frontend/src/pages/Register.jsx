@@ -118,10 +118,20 @@ const Register = () => {
         <div className="flex items-center justify-between">
           <button
             type="submit"
-            className="btn btn-primary w-full"
+            className="btn btn-primary w-full inline-flex items-center justify-center gap-2"
             disabled={loading}
           >
-            {loading ? 'Registrando...' : 'Registrar'}
+            {loading ? (
+              'Registrando...'
+            ) : (
+              <>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
+                  <path fillRule="evenodd" d="M12 2.25a5.25 5.25 0 100 10.5 5.25 5.25 0 000-10.5zM4.5 20.25a7.5 7.5 0 0115 0 .75.75 0 01-.75.75h-13.5a.75.75 0 01-.75-.75z" clipRule="evenodd" />
+                  <path d="M19.5 8.25h1.5a.75.75 0 010 1.5h-1.5v1.5a.75.75 0 01-1.5 0v-1.5h-1.5a.75.75 0 010-1.5h1.5v-1.5a.75.75 0 011.5 0v1.5z" />
+                </svg>
+                Registrar
+              </>
+            )}
           </button>
         </div>
       </form>

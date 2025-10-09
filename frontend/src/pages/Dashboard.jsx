@@ -14,7 +14,13 @@ const Dashboard = () => {
   const [error, setError] = useState('');
   const [showForm, setShowForm] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState(() => {
+    try {
+      return localStorage.getItem('dashboardSelectedCategory') || '';
+    } catch {
+      return '';
+    }
+  });
   const [categories, setCategories] = useState([]);
   
 
@@ -58,6 +64,28 @@ const Dashboard = () => {
       clearInterval(interval);
     };
   }, [user]);
+
+  // Persistir categoria selecionada ao alterar
+  useEffect(() => {
+    try {
+      localStorage.setItem('dashboardSelectedCategory', selectedCategory);
+    } catch {}
+  }, [selectedCategory]);
+
+  // Sincronizar categoria salva após carregar categorias e limpar se não existir
+  useEffect(() => {
+    if (categories.length === 0) return;
+    try {
+      const saved = localStorage.getItem('dashboardSelectedCategory') || '';
+      if (saved && categories.includes(saved)) {
+        setSelectedCategory(saved);
+        return;
+      }
+    } catch {}
+    if (selectedCategory && !categories.includes(selectedCategory)) {
+      setSelectedCategory('');
+    }
+  }, [categories]);
 
   // Adicionar novo contador
   const handleAddCounter = async (counterData) => {
@@ -103,8 +131,11 @@ const Dashboard = () => {
         <h1 className="text-2xl font-bold text-white">Meus Contadores</h1>
         <button
           onClick={() => setShowForm(true)}
-          className="bg-white text-blue-600 hover:bg-blue-50 font-semibold py-1.5 px-3 rounded-md shadow-sm transition-all duration-300"
+          className="bg-white text-blue-600 hover:bg-blue-50 font-semibold py-1.5 px-3 rounded-md shadow-sm transition-all duration-300 inline-flex items-center gap-2"
         >
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
+            <path fillRule="evenodd" d="M12 4.5a.75.75 0 01.75.75v6h6a.75.75 0 010 1.5h-6v6a.75.75 0 01-1.5 0v-6h-6a.75.75 0 010-1.5h6v-6A.75.75 0 0112 4.5z" clipRule="evenodd" />
+          </svg>
           Novo Contador
         </button>
       </div>
@@ -177,8 +208,11 @@ const Dashboard = () => {
           <p className="text-gray-500">Nenhum contador encontrado.</p>
           <button
             onClick={() => setShowForm(true)}
-            className="mt-4 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-1.5 px-3 rounded-md shadow-sm transition-all duration-300"
+            className="mt-4 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-1.5 px-3 rounded-md shadow-sm transition-all duration-300 inline-flex items-center gap-2"
           >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
+              <path fillRule="evenodd" d="M12 4.5a.75.75 0 01.75.75v6h6a.75.75 0 010 1.5h-6v6a.75.75 0 01-1.5 0v-6h-6a.75.75 0 010-1.5h6v-6A.75.75 0 0112 4.5z" clipRule="evenodd" />
+            </svg>
             Criar seu primeiro contador
           </button>
         </div>

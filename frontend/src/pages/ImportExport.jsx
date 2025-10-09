@@ -95,36 +95,23 @@ const ImportExport = () => {
         <h2 className="text-xl font-semibold mb-4">Exportar</h2>
         <p className="text-gray-600 mb-4">Baixe um arquivo JSON com seus contadores atuais. O arquivo gerado contém um <strong>array</strong> de objetos (sem wrapper).</p>
         <button
-          className="btn btn-primary"
+          className="btn btn-primary inline-flex items-center gap-2"
           onClick={handleExport}
           disabled={exportLoading}
         >
-          {exportLoading ? 'Exportando...' : 'Exportar JSON'}
+          {exportLoading ? (
+            'Exportando...'
+          ) : (
+            <>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
+                <path fillRule="evenodd" d="M12 3.75a.75.75 0 01.75.75v8.19l2.72-2.72a.75.75 0 111.06 1.06l-4 4a.75.75 0 01-1.06 0l-4-4a.75.75 0 111.06-1.06l2.72 2.72V4.5A.75.75 0 0112 3.75z" clipRule="evenodd" />
+                <path d="M4.5 19.5a.75.75 0 01.75-.75h13.5a.75.75 0 01.75.75v0a.75.75 0 01-.75.75H5.25a.75.75 0 01-.75-.75z" />
+              </svg>
+              Exportar JSON
+            </>
+          )}
         </button>
-      </div>
-
-      {/* Explicação dos campos e formato JSON */}
-      <div className="bg-blue-50 border border-blue-200 text-blue-900 px-4 py-4 rounded mb-8">
-        <h3 className="text-lg font-semibold mb-2">Formato do JSON (Importação/Exportação)</h3>
-        <p className="text-sm mb-3">
-          • Exportação: retorna um <strong>array</strong> de contadores.<br/>
-          • Importação: aceita um <strong>array</strong> de contadores ou um objeto no formato <code>{'{'}"items": [ ... ]{'}'}</code>.
-        </p>
-        <h4 className="font-semibold mb-1">Campos do contador</h4>
-        <ul className="list-disc list-inside text-sm mb-3">
-          <li><code>name</code> (obrigatório): texto não vazio e único por usuário.</li>
-          <li><code>description</code> (opcional): texto livre.</li>
-          <li><code>eventDate</code> (opcional): data em ISO 8601 (ex.: <code>YYYY-MM-DDTHH:mm:ss.sssZ</code>). Se ausente ou inválida, será definido o horário atual.</li>
-          <li><code>category</code> (opcional): texto livre. Padrão: <code>Geral</code>.</li>
-          <li><code>recurrence</code> (opcional): valores aceitos: <code>none</code>, <code>weekly</code>, <code>monthly</code>, <code>yearly</code>. Padrão: <code>none</code>.</li>
-        </ul>
-        <p className="text-xs text-blue-800 mb-3">Campos desconhecidos são ignorados durante a importação.</p>
-        <h4 className="font-semibold mb-2">Exemplo de objeto de contador</h4>
-        <div className="overflow-auto max-h-64 border rounded p-3 bg-white">
-          <pre className="text-xs">{"{\n  \"name\": \"Vale Mercado\",\n  \"description\": \"\",\n  \"eventDate\": \"2025-10-15T03:00:00.000Z\",\n  \"category\": \"Finanças\",\n  \"recurrence\": \"monthly\"\n}"}</pre>
-        </div>
-        <p className="text-xs text-blue-800 mt-2">Para importar vários, use um <strong>array</strong> desses objetos ou <code>{'{'}"items": [ ... ]{'}'}</code>.</p>
-      </div>
+      </div>     
 
       <div className="bg-white shadow-md rounded p-6">
         <h2 className="text-xl font-semibold mb-4">Importar</h2>
@@ -144,11 +131,19 @@ const ImportExport = () => {
           )}
         </div>
         <button
-          className="btn btn-success"
+          className="btn btn-success inline-flex items-center gap-2"
           onClick={handleImport}
           disabled={importLoading || !rawData}
         >
-          {importLoading ? 'Importando...' : 'Importar'}
+          {importLoading ? 'Importando...' : (
+            <>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
+                <path fillRule="evenodd" d="M12 20.25a.75.75 0 01-.75-.75v-8.19l-2.72 2.72a.75.75 0 11-1.06-1.06l4-4a.75.75 0 011.06 0l4 4a.75.75 0 11-1.06 1.06l-2.72-2.72v8.19a.75.75 0 01-.75.75z" clipRule="evenodd" />
+                <path d="M4.5 4.5a.75.75 0 01.75-.75h13.5a.75.75 0 01.75.75v0a.75.75 0 01-.75.75H5.25a.75.75 0 01-.75-.75z" />
+              </svg>
+              Importar
+            </>
+          )}
         </button>
 
         {summary && (
@@ -171,6 +166,28 @@ const ImportExport = () => {
             )}
           </div>
         )}
+      </div>
+         {/* Explicação dos campos e formato JSON */}
+      <div className="bg-blue-50 border border-blue-200 text-blue-900 px-4 py-4 rounded mb-8">
+        <h3 className="text-lg font-semibold mb-2">Formato do JSON (Importação/Exportação)</h3>
+        <p className="text-sm mb-3">
+          • Exportação: retorna um <strong>array</strong> de contadores.<br/>
+          • Importação: aceita um <strong>array</strong> de contadores ou um objeto no formato <code>{'{'}"items": [ ... ]{'}'}</code>.
+        </p>
+        <h4 className="font-semibold mb-1">Campos do contador</h4>
+        <ul className="list-disc list-inside text-sm mb-3">
+          <li><code>name</code> (obrigatório): texto não vazio e único por usuário.</li>
+          <li><code>description</code> (opcional): texto livre.</li>
+          <li><code>eventDate</code> (opcional): data em ISO 8601 (ex.: <code>YYYY-MM-DDTHH:mm:ss.sssZ</code>). Se ausente ou inválida, será definido o horário atual.</li>
+          <li><code>category</code> (opcional): texto livre. Padrão: <code>Geral</code>.</li>
+          <li><code>recurrence</code> (opcional): valores aceitos: <code>none</code>, <code>weekly</code>, <code>monthly</code>, <code>yearly</code>. Padrão: <code>none</code>.</li>
+        </ul>
+        <p className="text-xs text-blue-800 mb-3">Campos desconhecidos são ignorados durante a importação.</p>
+        <h4 className="font-semibold mb-2">Exemplo de objeto de contador</h4>
+        <div className="overflow-auto max-h-64 border rounded p-3 bg-white">
+          <pre className="text-xs">{"{\n  \"name\": \"Vale Mercado\",\n  \"description\": \"\",\n  \"eventDate\": \"2025-10-15T03:00:00.000Z\",\n  \"category\": \"Finanças\",\n  \"recurrence\": \"monthly\"\n}"}</pre>
+        </div>
+        <p className="text-xs text-blue-800 mt-2">Para importar vários, use um <strong>array</strong> desses objetos ou <code>{'{'}"items": [ ... ]{'}'}</code>.</p>
       </div>
     </div>
   );

@@ -116,8 +116,11 @@ const CounterDetail = () => {
         <div className="mt-4">
           <button
             onClick={() => navigate('/dashboard')}
-            className="btn btn-primary"
+            className="btn btn-primary inline-flex items-center gap-2"
           >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
+              <path fillRule="evenodd" d="M12.79 5.23a.75.75 0 010 1.06L8.56 10.5h10.69a.75.75 0 010 1.5H8.56l4.23 4.21a.75.75 0 11-1.06 1.06l-5.5-5.5a.75.75 0 010-1.06l5.5-5.5a.75.75 0 011.06 0z" clipRule="evenodd" />
+            </svg>
             Voltar para Dashboard
           </button>
         </div>
@@ -131,8 +134,11 @@ const CounterDetail = () => {
         <p className="text-gray-500">Contador não encontrado</p>
         <button
           onClick={() => navigate('/dashboard')}
-          className="mt-4 btn btn-primary"
+          className="mt-4 btn btn-primary inline-flex items-center gap-2"
         >
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
+            <path fillRule="evenodd" d="M12.79 5.23a.75.75 0 010 1.06L8.56 10.5h10.69a.75.75 0 010 1.5H8.56l4.23 4.21a.75.75 0 11-1.06 1.06l-5.5-5.5a.75.75 0 010-1.06l5.5-5.5a.75.75 0 011.06 0z" clipRule="evenodd" />
+          </svg>
           Voltar para Dashboard
         </button>
       </div>
@@ -151,6 +157,7 @@ const CounterDetail = () => {
             counter={counter} 
             onSubmit={handleUpdateCounter} 
             onCancel={() => navigate('/dashboard')} 
+            onDelete={handleDeleteCounter}
             categories={categories}
           />
         </div>
@@ -221,21 +228,22 @@ const CounterDetail = () => {
             <div>
               <button
                 onClick={() => navigate('/dashboard')}
-                className="btn btn-primary mr-2"
+                className="btn btn-primary mr-2 inline-flex items-center gap-2"
               >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
+                  <path fillRule="evenodd" d="M12.79 5.23a.75.75 0 010 1.06L8.56 10.5h10.69a.75.75 0 010 1.5H8.56l4.23 4.21a.75.75 0 11-1.06 1.06l-5.5-5.5a.75.75 0 010-1.06l5.5-5.5a.75.75 0 011.06 0z" clipRule="evenodd" />
+                </svg>
                 Voltar
               </button>             
             </div>
-             <button
-              onClick={handleDeleteCounter}
-              className="btn btn-danger"
-            >
-              Excluir
-            </button>
             <button
                 onClick={() => setEditing(true)}
-                className="btn btn-success"
+                className="btn btn-success inline-flex items-center gap-2"
               >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
+                  <path d="M16.862 3.487a2.25 2.25 0 013.182 3.182l-9.58 9.58a2.25 2.25 0 01-.952.563l-3.714 1.06a.75.75 0 01-.932-.932l1.06-3.714a2.25 2.25 0 01.563-.952l9.58-9.58z" />
+                  <path d="M5.25 20.25h13.5a.75.75 0 010 1.5H5.25a.75.75 0 010-1.5z" />
+                </svg>
                 Editar
               </button>
             
