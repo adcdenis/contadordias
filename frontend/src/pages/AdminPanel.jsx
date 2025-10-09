@@ -48,10 +48,11 @@ const AdminPanel = () => {
   const confirmDelete = async () => {
     if (!confirmDeleteUser) return;
     try {
-      await axios.delete(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/users/${confirmDeleteUser._id}`);
+      const res = await axios.delete(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/users/${confirmDeleteUser._id}`);
       setUsers(users.filter(u => u._id !== confirmDeleteUser._id));
       setConfirmDeleteUser(null);
-      showToast('Usuário excluído com sucesso');
+      const removed = (res && res.data && typeof res.data.countersRemoved === 'number') ? res.data.countersRemoved : 0;
+      showToast(`Usuário excluído com sucesso. Contadores removidos: ${removed}`);
     } catch (err) {
       setError('Erro ao excluir usuário');
       console.error(err);

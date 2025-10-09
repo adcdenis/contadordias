@@ -161,12 +161,12 @@ const CounterForm = ({ counter, onSubmit, onCancel, onDelete, categories = [] })
         </select>
       </div>
       
-      <div className="flex justify-between items-center">
-        <div>
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 sm:gap-3">
+        <div className="order-2 sm:order-1 w-full sm:w-auto">
           {onDelete && (
             <button
               type="button"
-              className="btn btn-danger inline-flex items-center gap-2"
+              className="btn btn-danger inline-flex items-center gap-2 w-full sm:w-auto"
               onClick={onDelete}
             >
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
@@ -176,10 +176,10 @@ const CounterForm = ({ counter, onSubmit, onCancel, onDelete, categories = [] })
             </button>
           )}
         </div>
-        <div className="flex space-x-2">
+        <div className="flex flex-wrap gap-2 w-full sm:w-auto order-1 sm:order-2 justify-end">
           <button
             type="button"
-            className="btn btn-danger inline-flex items-center gap-2"
+            className="btn btn-danger inline-flex items-center gap-2 w-full sm:w-auto"
             onClick={onCancel}
           >
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
@@ -189,7 +189,7 @@ const CounterForm = ({ counter, onSubmit, onCancel, onDelete, categories = [] })
           </button>
           <button
             type="submit"
-            className="btn btn-primary inline-flex items-center gap-2"
+            className="btn btn-primary inline-flex items-center gap-2 w-full sm:w-auto"
           >
             {counter ? (
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" className="w-4 h-4" strokeWidth="2">

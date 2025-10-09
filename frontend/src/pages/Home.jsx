@@ -64,6 +64,34 @@ const Home = () => {
             Classifique seus contadores por categorias para manter tudo organizado.
           </p>
         </div>
+          <div className="bg-white p-6 rounded-lg shadow-md">
+              <div className="text-blue-600 text-4xl mb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12" viewBox="0 0 24 24" fill="currentColor">
+                  <path fillRule="evenodd" d="M12 20.25a.75.75 0 01-.75-.75v-8.19l-2.72 2.72a.75.75 0 11-1.06-1.06l4-4a.75.75 0 011.06 0l4 4a.75.75 0 11-1.06 1.06l-2.72-2.72v8.19a.75.75 0 01-.75.75z" clipRule="evenodd" />
+                  <path d="M4.5 4.5a.75.75 0 01.75-.75h13.5a.75.75 0 01.75.75v0a.75.75 0 01-.75.75H5.25a.75.75 0 01-.75-.75z" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-bold mb-2">Importação/Exportação</h3>
+              <p className="text-gray-600 mb-4">
+                Importe contadores a partir de um arquivo JSON ou exporte seus dados para backup.
+              </p>             
+            </div>
+
+        <div className="bg-white p-6 rounded-lg shadow-md">
+              <div className="text-blue-600 text-4xl mb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M4 20.5h16" />
+                  <path d="M7 18V9" />
+                  <path d="M12 18V6" />
+                  <path d="M17 18V11" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-bold mb-2">Página de Resumo</h3>
+              <p className="text-gray-600 mb-4">
+                Veja totais e gráficos por categoria para entender seus eventos rapidamente.
+              </p>             
+            </div>
+
         
         {/* Seção de favoritos removida */}
       </div>
