@@ -238,13 +238,14 @@ const CounterDetail = () => {
             </div>
             <button
                 onClick={() => setEditing(true)}
-                className="btn btn-success inline-flex items-center gap-2"
+                aria-label="Editar contador"
+                className="btn btn-success inline-flex items-center gap-2 text-sm px-2 py-1 sm:text-base sm:px-3 sm:py-1.5"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
                   <path d="M16.862 3.487a2.25 2.25 0 013.182 3.182l-9.58 9.58a2.25 2.25 0 01-.952.563l-3.714 1.06a.75.75 0 01-.932-.932l1.06-3.714a2.25 2.25 0 01.563-.952l9.58-9.58z" />
                   <path d="M5.25 20.25h13.5a.75.75 0 010 1.5H5.25a.75.75 0 010-1.5z" />
                 </svg>
-                Editar
+                <span className="hidden sm:inline">Editar</span>
               </button>
             
           </div>

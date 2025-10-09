@@ -131,12 +131,13 @@ const Dashboard = () => {
         <h1 className="text-2xl font-bold text-white">Meus Contadores</h1>
         <button
           onClick={() => setShowForm(true)}
-          className="bg-white text-blue-600 hover:bg-blue-50 font-semibold py-1.5 px-3 rounded-md shadow-sm transition-all duration-300 inline-flex items-center gap-2"
+          aria-label="Novo Contador"
+          className="bg-white text-blue-600 hover:bg-blue-50 font-semibold py-1 px-2 sm:py-1.5 sm:px-3 rounded-md shadow-sm transition-all duration-300 inline-flex items-center gap-2"
         >
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
             <path fillRule="evenodd" d="M12 4.5a.75.75 0 01.75.75v6h6a.75.75 0 010 1.5h-6v6a.75.75 0 01-1.5 0v-6h-6a.75.75 0 010-1.5h6v-6A.75.75 0 0112 4.5z" clipRule="evenodd" />
           </svg>
-          Novo Contador
+          <span className="hidden sm:inline">Novo Contador</span>
         </button>
       </div>
 
@@ -209,12 +210,14 @@ const Dashboard = () => {
           <p className="text-gray-500">Nenhum contador encontrado.</p>
           <button
             onClick={() => setShowForm(true)}
-            className="mt-4 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-1.5 px-3 rounded-md shadow-sm transition-all duration-300 inline-flex items-center gap-2"
+            aria-label="Criar contador"
+            className="mt-4 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-1 px-2 sm:py-1.5 sm:px-3 rounded-md shadow-sm transition-all duration-300 inline-flex items-center gap-2"
           >
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
               <path fillRule="evenodd" d="M12 4.5a.75.75 0 01.75.75v6h6a.75.75 0 010 1.5h-6v6a.75.75 0 01-1.5 0v-6h-6a.75.75 0 010-1.5h6v-6A.75.75 0 0112 4.5z" clipRule="evenodd" />
             </svg>
-            Criar seu primeiro contador
+            <span className="sm:hidden">Criar</span>
+            <span className="hidden sm:inline">Criar seu primeiro contador</span>
           </button>
         </div>
       ) : (

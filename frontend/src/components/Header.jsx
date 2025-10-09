@@ -8,6 +8,8 @@ const Header = () => {
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef(null);
+  const [optionsOpen, setOptionsOpen] = useState(false);
+  const optionsRef = useRef(null);
 
   // Util para obter iniciais do nome do usuário
   const getInitials = (name) => {
@@ -31,6 +33,9 @@ const Header = () => {
       if (menuRef.current && !menuRef.current.contains(event.target)) {
         setMenuOpen(false);
       }
+      if (optionsRef.current && !optionsRef.current.contains(event.target)) {
+        setOptionsOpen(false);
+      }
     };
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
@@ -52,15 +57,45 @@ const Header = () => {
               <Link to="/resumo" className="px-2 py-1 sm:px-3 sm:py-2 rounded hover:bg-blue-700 mr-1 sm:mr-2 text-sm sm:text-base">
                 Resumo
               </Link>
-              <Link to="/importar-exportar" className="px-2 py-1 sm:px-3 sm:py-2 rounded hover:bg-blue-700 mr-1 sm:mr-2 text-sm sm:text-base">
-                Importar/Exportar
-              </Link>
-              
-              {isAdmin && (
-                <Link to="/admin" className="px-2 py-1 sm:px-3 sm:py-2 rounded hover:bg-blue-700 mr-1 sm:mr-2 text-sm sm:text-base">
-                  Admin
-                </Link>
-              )}
+
+              {/* Opções dropdown */}
+              <div className="relative" ref={optionsRef}>
+                <button
+                  className="px-2 py-1 sm:px-3 sm:py-2 rounded hover:bg-blue-700 flex items-center text-sm sm:text-base"
+                  onClick={() => setOptionsOpen((prev) => !prev)}
+                  aria-haspopup="menu"
+                  aria-expanded={optionsOpen}
+                >
+                  Opções
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+                <div className={`absolute right-0 mt-2 w-40 sm:w-48 bg-white rounded-md shadow-lg py-1 z-10 ${optionsOpen ? 'block' : 'hidden'}`}>
+                  <Link
+                    to="/importar-exportar"
+                    className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100 inline-flex items-center gap-2"
+                    onClick={() => setOptionsOpen(false)}
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
+                      <path d="M12 3a1 1 0 011 1v7h7a1 1 0 110 2h-7v7a1 1 0 11-2 0v-7H4a1 1 0 110-2h7V4a1 1 0 011-1z" />
+                    </svg>
+                    Importar/Exportar
+                  </Link>
+                  {isAdmin && (
+                    <Link
+                      to="/admin"
+                      className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100 inline-flex items-center gap-2"
+                      onClick={() => setOptionsOpen(false)}
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
+                        <path d="M12 2a10 10 0 100 20 10 10 0 000-20zm1 5a1 1 0 10-2 0v4H7a1 1 0 100 2h4v4a1 1 0 102 0v-4h4a1 1 0 100-2h-4V7z" />
+                      </svg>
+                      Admin
+                    </Link>
+                  )}
+                </div>
+              </div>
               
               <div className="relative flex-shrink-0" ref={menuRef}>
                 <button
