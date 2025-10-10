@@ -83,6 +83,27 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  // Login com Google: troca id_token por JWT próprio
+  const loginWithGoogle = async (idToken) => {
+    try {
+      const response = await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/auth/google`, {
+        token: idToken
+      });
+      const userData = response.data;
+      if (userData?.token) {
+        axios.defaults.headers.common['Authorization'] = `Bearer ${userData.token}`;
+      }
+      setUser(userData);
+      localStorage.setItem('user', JSON.stringify(userData));
+      return { success: true };
+    } catch (error) {
+      return {
+        success: false,
+        message: error.response?.data?.message || 'Erro na autenticação com Google'
+      };
+    }
+  };
+
   // Função para logout
   const logout = () => {
     setUser(null);
@@ -95,6 +116,7 @@ export const AuthProvider = ({ children }) => {
     loading,
     login,
     register,
+    loginWithGoogle,
     logout,
     isAdmin: user?.role === 'admin'
   };

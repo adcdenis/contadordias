@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+const { OAuth2Client } = require('google-auth-library');
 
 // Gerar token JWT
 const generateToken = (id) => {
@@ -92,5 +93,59 @@ exports.getUserProfile = async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Erro no servidor' });
+  }
+};
+
+// @desc    Autenticar com Google e obter token
+// @route   POST /api/auth/google
+// @access  Public
+exports.googleLogin = async (req, res) => {
+  try {
+    const { token } = req.body;
+    if (!token) {
+      return res.status(400).json({ message: 'Token do Google ausente' });
+    }
+
+    const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+    const ticket = await client.verifyIdToken({
+      idToken: token,
+      audience: process.env.GOOGLE_CLIENT_ID
+    });
+
+    const payload = ticket.getPayload();
+    const email = payload?.email;
+    const name = payload?.name || (email ? email.split('@')[0] : 'Usuário');
+    const googleId = payload?.sub;
+
+    if (!email) {
+      return res.status(400).json({ message: 'Email não disponível no token Google' });
+    }
+
+    let user = await User.findOne({ email });
+    if (!user) {
+      user = await User.create({
+        name,
+        email,
+        provider: 'google',
+        googleId
+      });
+  } else {
+      // Não alterar provider de usuários locais; apenas anexar googleId quando necessário
+      if (!user.googleId) {
+        user.googleId = googleId;
+        await user.save();
+      }
+    }
+
+    res.json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
+      token: generateToken(user._id)
+    });
+  } catch (error) {
+    console.error('Erro no login com Google:', error);
+    res.status(401).json({ message: 'Falha na autenticação com Google' });
   }
 };

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
@@ -9,9 +9,10 @@ const Login = () => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   
-  const { login } = useAuth();
+  const { login, loginWithGoogle } = useAuth();
   const navigate = useNavigate();
   const { showToast } = useToast();
+  const googleBtnRef = useRef(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -40,6 +41,45 @@ const Login = () => {
       setLoading(false);
     }
   };
+
+  // Inicializar Google Identity Services
+  useEffect(() => {
+    const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+    if (!clientId) {
+      return; // sem client id, não renderiza botão
+    }
+    if (window.google && googleBtnRef.current) {
+      try {
+        window.google.accounts.id.initialize({
+          client_id: clientId,
+          callback: async (response) => {
+            try {
+              const idToken = response.credential;
+              const result = await loginWithGoogle(idToken);
+              if (result.success) {
+                showToast('Login com Google realizado com sucesso');
+                navigate('/dashboard');
+              } else {
+                setError(result.message || 'Falha no login com Google');
+              }
+            } catch (err) {
+              console.error('Erro no callback do Google:', err);
+              setError('Falha no login com Google');
+            }
+          }
+        });
+        window.google.accounts.id.renderButton(googleBtnRef.current, {
+          theme: 'outline',
+          size: 'large',
+          text: 'continue_with'
+        });
+        // opcional: one-tap
+        // window.google.accounts.id.prompt();
+      } catch (err) {
+        console.error('Erro ao inicializar Google Identity Services:', err);
+      }
+    }
+  }, [loginWithGoogle, navigate, showToast]);
 
   return (
     <div className="max-w-md mx-auto">
@@ -99,6 +139,17 @@ const Login = () => {
           </button>
         </div>
       </form>
+
+      {/* Login com Google */}
+      <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <div className="mb-4 text-center">
+          <p className="text-gray-600 mb-2">Ou continue com</p>
+          <div ref={googleBtnRef} className="flex justify-center"></div>
+          {!import.meta.env.VITE_GOOGLE_CLIENT_ID && (
+            <p className="text-red-600 text-sm mt-2">VITE_GOOGLE_CLIENT_ID não configurado</p>
+          )}
+        </div>
+      </div>
       
       <div className="text-center">
         <p>
