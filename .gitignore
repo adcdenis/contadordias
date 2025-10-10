@@ -1,0 +1,13 @@
+node_modules/
+dist/
+.DS_Store
+*.log
+
+# Ignore environment files (prevent secrets in VCS)
+backend/.env
+backend/.env.*
+frontend/.env
+frontend/.env.*
+
+# Vercel/Local
+.vercel/
