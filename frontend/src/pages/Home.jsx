@@ -8,7 +8,7 @@ const Home = () => {
   return (
     <div className="flex flex-col items-center">
       <div className="text-center max-w-3xl mx-auto py-12">
-        <h1 className="text-4xl font-bold mb-6">Contador de Dias</h1>
+        <h1 className="text-4xl font-bold mb-6">Lembre+</h1>
         <p className="text-xl mb-8">
           Acompanhe eventos importantes da sua vida com nosso contador de dias.
           Nunca mais esqueça datas importantes!
@@ -107,7 +107,7 @@ const Home = () => {
               </div>
               <h3 className="text-xl font-semibold mb-2">Crie uma Conta</h3>
               <p className="text-gray-600">
-                Registre-se gratuitamente para começar a usar o Contador de Dias.
+                Registre-se gratuitamente para começar a usar o Lembre+.
               </p>
             </div>
             

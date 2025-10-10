@@ -160,7 +160,7 @@ const Dashboard = () => {
   return (
     <div className="p-3">
       <div className="flex justify-between items-center mb-4 bg-gradient-to-r from-blue-500 to-indigo-600 p-3 rounded-md shadow">
-        <h1 className="text-xl font-bold text-white">Meus Contadores</h1>
+        <h1 className="text-xl font-bold text-white">Contadores</h1>
         <div className="flex items-center gap-2">
           {/* Botões de seleção múltipla à esquerda do novo contador */}
           <button

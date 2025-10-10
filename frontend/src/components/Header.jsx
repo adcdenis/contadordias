@@ -46,7 +46,7 @@ const Header = () => {
   return (
     <header className="bg-blue-600 text-white shadow-md">
       <div className="container mx-auto px-4 py-4 flex flex-wrap items-center justify-between gap-2">
-        <Link to="/" className="text-2xl font-bold flex-shrink-0">Contador de Dias</Link>
+        <Link to="/" className="text-2xl font-bold flex-shrink-0">Lembre+</Link>
         
         <nav className="flex flex-wrap items-center gap-2 ml-auto min-w-0">
           {user ? (
