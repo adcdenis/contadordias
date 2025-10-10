@@ -18,8 +18,7 @@ app.use(cors());
 app.use(express.json());
 app.use(morgan('dev'));
 
-// Conectar ao MongoDB
-console.log('Tentando conectar ao MongoDB com URI:', process.env.MONGO_URI);
+// Conectar ao MongoDB (não logar URI sensível)
 mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/contadordias', {
   useNewUrlParser: true,
   useUnifiedTopology: true
