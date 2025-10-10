@@ -296,7 +296,7 @@ const CounterForm = ({ counter, onSubmit, onCancel, onDelete, categories = [] })
                 <path fillRule="evenodd" d="M12 4.5a.75.75 0 01.75.75v6h6a.75.75 0 010 1.5h-6v6a.75.75 0 01-1.5 0v-6h-6a.75.75 0 010-1.5h6v-6A.75.75 0 0112 4.5z" clipRule="evenodd" />
               </svg>
             )}
-            {counter ? 'Atualizar' : 'Criar'}
+            {counter ? 'Gravar' : 'Criar'}
           </button>
         </div>
       </div>
