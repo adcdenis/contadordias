@@ -2,7 +2,7 @@ import { useState, useEffect, useMemo } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { calculateDetailedTime } from '../utils/timeUtils';
 
-const CounterCard = ({ counter, onDelete }) => {
+const CounterCard = ({ counter, onDelete, selected = false, onSelectChange, selectionMode = false }) => {
   const { _id, name, description, eventDate, category, recurrence } = counter;
   const [showConfirmDelete, setShowConfirmDelete] = useState(false);
   const [currentTime, setCurrentTime] = useState(new Date());
@@ -62,7 +62,20 @@ const CounterCard = ({ counter, onDelete }) => {
       onClick={navigateToCounter}
     >
       <div className="flex justify-between items-start mb-3">
-        <h3 className="text-base md:text-lg font-semibold truncate">{name}</h3>
+        <div className="flex items-center gap-2">
+          {/* Checkbox de seleção múltipla (visível apenas em modo de seleção) */}
+          {selectionMode && onSelectChange && (
+            <input
+              type="checkbox"
+              aria-label="Selecionar contador"
+              checked={!!selected}
+              onChange={(e) => onSelectChange(e.target.checked)}
+              onClick={(e) => e.stopPropagation()}
+              className="w-4 h-4 accent-blue-600 cursor-pointer"
+            />
+          )}
+          <h3 className="text-base md:text-lg font-semibold truncate">{name}</h3>
+        </div>
         <div className="flex space-x-2" onClick={(e) => e.stopPropagation()}>
           <Link 
             to={`/counter/${_id}`} 
