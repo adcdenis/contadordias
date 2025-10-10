@@ -12,6 +12,7 @@ import NotFound from './pages/NotFound';
 import Summary from './pages/Summary';
 import Home from './pages/Home';
 import ImportExport from './pages/ImportExport';
+import Reports from './pages/Reports';
 
 // Componentes
 import Header from './components/Header';
@@ -53,6 +54,12 @@ function App() {
             <Route path="/importar-exportar" element={
               <PrivateRoute>
                 <ImportExport />
+              </PrivateRoute>
+            } />
+
+            <Route path="/relatorios" element={
+              <PrivateRoute>
+                <Reports />
               </PrivateRoute>
             } />
             

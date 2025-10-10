@@ -73,6 +73,19 @@ const Header = () => {
                 </button>
                 <div className={`absolute right-0 mt-2 w-40 sm:w-48 bg-white rounded-md shadow-lg py-1 z-10 ${optionsOpen ? 'block' : 'hidden'}`}>
                   <Link
+                    to="/relatorios"
+                    className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100 inline-flex items-center gap-2"
+                    onClick={() => setOptionsOpen(false)}
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
+                      <path d="M4 20.5h16" />
+                      <path d="M7 18V9" />
+                      <path d="M12 18V6" />
+                      <path d="M17 18V11" />
+                    </svg>
+                    Relatórios
+                  </Link>
+                  <Link
                     to="/importar-exportar"
                     className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100 inline-flex items-center gap-2"
                     onClick={() => setOptionsOpen(false)}
