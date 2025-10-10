@@ -160,7 +160,7 @@ const Dashboard = () => {
   return (
     <div className="p-3">
       <div className="flex justify-between items-center mb-4 bg-gradient-to-r from-blue-500 to-indigo-600 p-3 rounded-md shadow">
-        <h1 className="text-2xl font-bold text-white">Meus Contadores</h1>
+        <h1 className="text-xl font-bold text-white">Meus Contadores</h1>
         <div className="flex items-center gap-2">
           {/* Botões de seleção múltipla à esquerda do novo contador */}
           <button
@@ -198,9 +198,8 @@ const Dashboard = () => {
           >
             <span className="inline-flex items-center justify-center w-full h-full" aria-hidden="true">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-  <path strokeLinecap="round" strokeLinejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-</svg>
-
+              <path strokeLinecap="round" strokeLinejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+            </svg>
 
             </span>
           </button>
