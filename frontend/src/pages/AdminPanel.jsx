@@ -20,7 +20,7 @@ const AdminPanel = () => {
     const fetchUsers = async () => {
       try {
         setLoading(true);
-        const response = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/users`);
+        const response = await axios.get(`${import.meta.env.VITE_API_URL || '/api'}/users`);
         setUsers(response.data);
       } catch (err) {
         setError('Erro ao carregar usuários');
@@ -48,7 +48,7 @@ const AdminPanel = () => {
   const confirmDelete = async () => {
     if (!confirmDeleteUser) return;
     try {
-      const res = await axios.delete(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/users/${confirmDeleteUser._id}`);
+      const res = await axios.delete(`${import.meta.env.VITE_API_URL || '/api'}/users/${confirmDeleteUser._id}`);
       setUsers(users.filter(u => u._id !== confirmDeleteUser._id));
       setConfirmDeleteUser(null);
       const removed = (res && res.data && typeof res.data.countersRemoved === 'number') ? res.data.countersRemoved : 0;
@@ -85,7 +85,7 @@ const AdminPanel = () => {
         return;
       }
       setSaving(true);
-      await axios.put(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/users/${id}`, {
+      await axios.put(`${import.meta.env.VITE_API_URL || '/api'}/users/${id}`, {
         password: newPassword
       });
       cancelEditPassword();
@@ -102,7 +102,7 @@ const AdminPanel = () => {
     if (!confirmRoleChange) return;
     try {
       const { user, targetRole } = confirmRoleChange;
-      await axios.put(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/users/${user._id}/role`, { role: targetRole });
+      await axios.put(`${import.meta.env.VITE_API_URL || '/api'}/users/${user._id}/role`, { role: targetRole });
       setUsers(prev => prev.map(u => u._id === user._id ? { ...u, role: targetRole } : u));
       setConfirmRoleChange(null);
       showToast('Função atualizada com sucesso');

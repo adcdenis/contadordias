@@ -27,7 +27,7 @@ const Dashboard = () => {
   // Buscar contadores (sem alterar loading para evitar "refresh" visual em polling)
   const fetchCounters = async () => {
     try {
-      const response = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/counters`);
+      const response = await axios.get(`${import.meta.env.VITE_API_URL || '/api'}/counters`);
       setCounters(response.data);
       
       // Extrair categorias únicas
@@ -90,7 +90,7 @@ const Dashboard = () => {
   // Adicionar novo contador
   const handleAddCounter = async (counterData) => {
     try {
-    await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/counters`, counterData);
+    await axios.post(`${import.meta.env.VITE_API_URL || '/api'}/counters`, counterData);
       fetchCounters();
       setShowForm(false);
       showToast('Contador criado com sucesso');
@@ -103,7 +103,7 @@ const Dashboard = () => {
   // Excluir contador
   const handleDeleteCounter = async (id) => {
     try {
-    await axios.delete(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/counters/${id}`);
+    await axios.delete(`${import.meta.env.VITE_API_URL || '/api'}/counters/${id}`);
       fetchCounters();
       showToast('Contador excluído com sucesso');
     } catch (err) {
@@ -145,7 +145,7 @@ const Dashboard = () => {
     try {
       await Promise.all(
         selectedIds.map((id) =>
-          axios.delete(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/counters/${id}`)
+          axios.delete(`${import.meta.env.VITE_API_URL || '/api'}/counters/${id}`)
         )
       );
       showToast(`Excluídos ${selectedIds.length} contador(es)`);

@@ -25,7 +25,7 @@ const CounterDetail = () => {
     const fetchCounter = async () => {
       try {
         setLoading(true);
-  const response = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/counters/${id}`);
+  const response = await axios.get(`${import.meta.env.VITE_API_URL || '/api'}/counters/${id}`);
         setCounter(response.data);
         calculateTimeRemaining(new Date(response.data.eventDate));
       } catch (err) {
@@ -43,7 +43,7 @@ const CounterDetail = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-  const response = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/counters`);
+  const response = await axios.get(`${import.meta.env.VITE_API_URL || '/api'}/counters`);
         const uniqueCategories = [...new Set(response.data.map(c => c.category))];
         setCategories(uniqueCategories);
       } catch (err) {
@@ -74,8 +74,8 @@ const CounterDetail = () => {
   // Atualizar contador
   const handleUpdateCounter = async (updatedData) => {
     try {
-    await axios.put(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/counters/${id}`, updatedData);
-    const response = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/counters/${id}`);
+    await axios.put(`${import.meta.env.VITE_API_URL || '/api'}/counters/${id}`, updatedData);
+    const response = await axios.get(`${import.meta.env.VITE_API_URL || '/api'}/counters/${id}`);
       setCounter(response.data);
       setEditing(false);
       calculateTimeRemaining(new Date(response.data.eventDate));
@@ -91,7 +91,7 @@ const CounterDetail = () => {
   const handleDeleteCounter = async () => {
     if (window.confirm('Tem certeza que deseja excluir este contador?')) {
       try {
-    await axios.delete(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/counters/${id}`);
+    await axios.delete(`${import.meta.env.VITE_API_URL || '/api'}/counters/${id}`);
         showToast('Contador excluído com sucesso');
         navigate('/dashboard');
       } catch (err) {

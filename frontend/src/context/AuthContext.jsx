@@ -37,7 +37,7 @@ export const AuthProvider = ({ children }) => {
   // Função para login
   const login = async (email, password) => {
     try {
-  const response = await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/auth/login`, {
+  const response = await axios.post(`${import.meta.env.VITE_API_URL || '/api'}/auth/login`, {
         email,
         password
       });
@@ -61,7 +61,7 @@ export const AuthProvider = ({ children }) => {
   // Função para registro
   const register = async (name, email, password) => {
     try {
-  const response = await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/auth/register`, {
+  const response = await axios.post(`${import.meta.env.VITE_API_URL || '/api'}/auth/register`, {
         name,
         email,
         password
@@ -86,7 +86,7 @@ export const AuthProvider = ({ children }) => {
   // Login com Google: troca id_token por JWT próprio
   const loginWithGoogle = async (idToken) => {
     try {
-      const response = await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/auth/google`, {
+      const response = await axios.post(`${import.meta.env.VITE_API_URL || '/api'}/auth/google`, {
         token: idToken
       });
       const userData = response.data;

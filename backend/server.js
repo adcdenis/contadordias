@@ -19,7 +19,7 @@ app.use(express.json());
 app.use(morgan('dev'));
 
 // Conectar ao MongoDB (não logar URI sensível)
-mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/contadordias', {
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/contadordias', {
   useNewUrlParser: true,
   useUnifiedTopology: true
 })

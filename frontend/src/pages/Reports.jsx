@@ -44,7 +44,7 @@ const Reports = () => {
     const fetchCounters = async () => {
       try {
         setLoading(true);
-        const base = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+        const base = import.meta.env.VITE_API_URL || '/api';
         const response = await axios.get(`${base}/counters`);
         setCounters(response.data || []);
         const uniqueCategories = [...new Set((response.data || []).map((c) => c.category).filter(Boolean))];
