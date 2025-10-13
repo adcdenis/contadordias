@@ -65,13 +65,7 @@ const Header = () => {
                   onClick={() => setOptionsOpen((prev) => !prev)}
                   aria-haspopup="menu"
                   aria-expanded={optionsOpen}
-                >
-                  {/* Ícone de opções com melhor legibilidade */}
-                  <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                    <circle cx="12" cy="6" r="1.7" />
-                    <circle cx="12" cy="12" r="1.7" />
-                    <circle cx="12" cy="18" r="1.7" />
-                  </svg>
+                >                 
                   Opções
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
@@ -92,7 +86,7 @@ const Header = () => {
                     Relatórios
                   </Link>
                   <Link
-                    to="/importar-exportar"
+                    to="/backup"
                     className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100 inline-flex items-center gap-2"
                     onClick={() => setOptionsOpen(false)}
                   >
@@ -101,7 +95,7 @@ const Header = () => {
                       <path strokeLinecap="round" strokeLinejoin="round" d="M7 7l5 5-5 5M7 12h10" />
                       <path strokeLinecap="round" strokeLinejoin="round" d="M17 17l-5-5 5-5M17 12H7" />
                     </svg>
-                    Importar/Exportar
+                    Backup
                   </Link>
                   {isAdmin && (
                     <Link

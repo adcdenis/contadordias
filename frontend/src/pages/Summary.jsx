@@ -12,10 +12,10 @@ const CategoryBarChart = ({ data }) => {
   const max = entries.reduce((m, [, v]) => Math.max(m, v), 0);
 
   // Dimensões do gráfico
-  const barHeight = 28;
-  const gap = 8;
-  const leftLabelWidth = 120;
-  const rightValueWidth = 50;
+  const barHeight = 34;
+  const gap = 10;
+  const leftLabelWidth = 160;
+  const rightValueWidth = 80;
   const chartWidth = 500; // área útil para barras
   const width = leftLabelWidth + chartWidth + rightValueWidth;
   const height = entries.length * (barHeight + gap);
@@ -34,13 +34,13 @@ const CategoryBarChart = ({ data }) => {
         return (
           <g key={label} transform={`translate(0, ${y})`}>
             {/* label */}
-            <text x={4} y={barHeight / 2} dominantBaseline="middle" className="text-sm fill-gray-700">
+            <text x={4} y={barHeight / 2} dominantBaseline="middle" className="text-lg fill-gray-700">
               {label}
             </text>
             {/* barra */}
             <rect x={leftLabelWidth} y={4} width={Math.max(4, w)} height={barHeight - 8} rx={6} className="fill-blue-500" />
             {/* valor */}
-            <text x={leftLabelWidth + chartWidth + 6} y={barHeight / 2} dominantBaseline="middle" className="text-sm fill-gray-700">
+            <text x={leftLabelWidth + chartWidth + 6} y={barHeight / 2} dominantBaseline="middle" className="text-lg fill-gray-700">
               {formatNumber(value)}
             </text>
           </g>
@@ -93,7 +93,7 @@ const CategoryPieChart = ({ data }) => {
         {/* círculo interno para suavizar centro */}
         <circle cx={cx} cy={cy} r={innerR-1} fill="white" />
       </svg>
-      <div className="text-sm">
+      <div className="text-lg">
         {segments.map((s) => (
           <div key={s.label} className="flex items-center gap-2 py-0.5">
             <span className="inline-block w-3 h-3 rounded" style={{ backgroundColor: s.color }}></span>
@@ -182,22 +182,30 @@ const Summary = () => {
       <h1 className="text-2xl font-bold mb-4">Resumo</h1>
 
       {/* Cards de totais principais */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
-        <div className="bg-white rounded-lg border border-gray-100 shadow-sm p-5">
-          <p className="text-xs text-gray-500">Total de itens</p>
-          <p className="text-2xl font-semibold">{formatNumber(totals.totalItems)}</p>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
+        <div className="bg-white rounded-lg border border-gray-200 shadow p-6">
+          <div className="pl-4 border-l-4 border-slate-400 space-y-1.5">
+            <p className="text-lg text-gray-700">Total de itens</p>
+            <p className="text-lg font-semibold text-gray-900">{formatNumber(totals.totalItems)}</p>
+          </div>
         </div>
-        <div className="bg-white rounded-lg border border-gray-100 shadow-sm p-5">
-          <p className="text-xs text-gray-500">Total passado</p>
-          <p className="text-2xl font-semibold text-red-600">{formatNumber(totals.totalPast)}</p>
+        <div className="bg-white rounded-lg border border-gray-200 shadow p-6">
+          <div className="pl-4 border-l-4 border-red-500 space-y-1.5">
+            <p className="text-lg text-gray-700">Total passado</p>
+            <p className="text-lg font-semibold text-gray-900">{formatNumber(totals.totalPast)}</p>
+          </div>
         </div>
-        <div className="bg-white rounded-lg border border-gray-100 shadow-sm p-5">
-          <p className="text-xs text-gray-500">Total futuro</p>
-          <p className="text-2xl font-semibold text-blue-600">{formatNumber(totals.totalFuture)}</p>
+        <div className="bg-white rounded-lg border border-gray-200 shadow p-6">
+          <div className="pl-4 border-l-4 border-blue-500 space-y-1.5">
+            <p className="text-lg text-gray-700">Total futuro</p>
+            <p className="text-lg font-semibold text-gray-900">{formatNumber(totals.totalFuture)}</p>
+          </div>
         </div>
-        <div className="bg-white rounded-lg border border-gray-100 shadow-sm p-5 sm:col-span-2 lg:col-span-1">
-          <p className="text-xs text-gray-500">Total recorrente</p>
-          <p className="text-2xl font-semibold text-indigo-600">{formatNumber(totals.totalRecurring)}</p>
+        <div className="bg-white rounded-lg border border-gray-200 shadow p-6 sm:col-span-2 lg:col-span-1">
+          <div className="pl-4 border-l-4 border-indigo-500 space-y-1.5">
+            <p className="text-lg text-gray-700">Total recorrente</p>
+            <p className="text-lg font-semibold text-gray-900">{formatNumber(totals.totalRecurring)}</p>
+          </div>
         </div>
       </div>
 
