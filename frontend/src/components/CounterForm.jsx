@@ -264,11 +264,12 @@ const CounterForm = ({ counter, onSubmit, onCancel, onDelete, categories = [] })
               type="button"
               className="btn btn-danger inline-flex items-center gap-2 text-sm px-3 py-1.5 sm:text-base sm:px-4 sm:py-2"
               onClick={onDelete}
+              aria-label="Excluir"
             >
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
                 <path d="M9 3.75A.75.75 0 019.75 3h4.5a.75.75 0 01.75.75V5.25H18a.75.75 0 010 1.5h-.592l-.563 12.33A2.25 2.25 0 0114.6 21H9.4a2.25 2.25 0 01-2.245-1.92L6.592 6.75H6a.75.75 0 010-1.5h2.25V3.75zM8.095 6.75l.522 11.423a.75.75 0 00.748.677h5.27a.75.75 0 00.747-.677L16.905 6.75H8.095z" />
               </svg>
-              Excluir
+              <span className="hidden sm:inline">Excluir</span>
             </button>
           )}
         </div>
@@ -277,15 +278,17 @@ const CounterForm = ({ counter, onSubmit, onCancel, onDelete, categories = [] })
             type="button"
             className="btn btn-danger inline-flex items-center gap-2 text-sm px-3 py-1.5 sm:text-base sm:px-4 sm:py-2"
             onClick={onCancel}
+            aria-label="Cancelar"
           >
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
               <path fillRule="evenodd" d="M12 2.25a9.75 9.75 0 100 19.5 9.75 9.75 0 000-19.5zM9.53 8.47a.75.75 0 10-1.06 1.06L10.44 12l-1.97 1.97a.75.75 0 101.06 1.06L11.5 13.06l1.97 1.97a.75.75 0 101.06-1.06L12.56 12l1.97-1.97a.75.75 0 10-1.06-1.06L11.5 10.94 9.53 8.97z" clipRule="evenodd" />
             </svg>
-            Cancelar
+            <span className="hidden sm:inline">Cancelar</span>
           </button>
           <button
             type="submit"
             className="btn btn-primary inline-flex items-center gap-2 text-sm px-3 py-1.5 sm:text-base sm:px-4 sm:py-2"
+            aria-label={counter ? 'Gravar' : 'Criar'}
           >
             {counter ? (
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" className="w-4 h-4" strokeWidth="2">
@@ -296,7 +299,7 @@ const CounterForm = ({ counter, onSubmit, onCancel, onDelete, categories = [] })
                 <path fillRule="evenodd" d="M12 4.5a.75.75 0 01.75.75v6h6a.75.75 0 010 1.5h-6v6a.75.75 0 01-1.5 0v-6h-6a.75.75 0 010-1.5h6v-6A.75.75 0 0112 4.5z" clipRule="evenodd" />
               </svg>
             )}
-            {counter ? 'Gravar' : 'Criar'}
+            <span className="hidden sm:inline">{counter ? 'Gravar' : 'Criar'}</span>
           </button>
         </div>
       </div>
