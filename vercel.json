@@ -21,18 +21,9 @@
       ]
     }
   ],
-  "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "/api/index.js"
-    },
-    {
-      "src": "/(?!.*\\.).*",
-      "dest": "/frontend/index.html"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/frontend/$1"
-    }
-  ] 
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": "/api/index.js" },
+    { "source": "/(?!.*\\.).*", "destination": "/frontend/index.html" },
+    { "source": "/(.*)", "destination": "/frontend/$1" }
+  ]
 }
