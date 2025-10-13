@@ -66,6 +66,12 @@ const Header = () => {
                   aria-haspopup="menu"
                   aria-expanded={optionsOpen}
                 >
+                  {/* Ícone de opções com melhor legibilidade */}
+                  <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <circle cx="12" cy="6" r="1.7" />
+                    <circle cx="12" cy="12" r="1.7" />
+                    <circle cx="12" cy="18" r="1.7" />
+                  </svg>
                   Opções
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
@@ -77,11 +83,11 @@ const Header = () => {
                     className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100 inline-flex items-center gap-2"
                     onClick={() => setOptionsOpen(false)}
                   >
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
-                      <path d="M4 20.5h16" />
-                      <path d="M7 18V9" />
-                      <path d="M12 18V6" />
-                      <path d="M17 18V11" />
+                    {/* Ícone de relatórios: barras mais visíveis */}
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="w-5 h-5 text-gray-700" fill="currentColor" aria-hidden="true">
+                      <rect x="5" y="10" width="3" height="7" rx="0" />
+                      <rect x="10.5" y="6" width="3" height="11" rx="0" />
+                      <rect x="16" y="12" width="3" height="5" rx="0" />
                     </svg>
                     Relatórios
                   </Link>
@@ -90,8 +96,10 @@ const Header = () => {
                     className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100 inline-flex items-center gap-2"
                     onClick={() => setOptionsOpen(false)}
                   >
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
-                      <path d="M12 3a1 1 0 011 1v7h7a1 1 0 110 2h-7v7a1 1 0 11-2 0v-7H4a1 1 0 110-2h7V4a1 1 0 011-1z" />
+                    {/* Ícone de importar/exportar: setas bidirecionais */}
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M7 7l5 5-5 5M7 12h10" />
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M17 17l-5-5 5-5M17 12H7" />
                     </svg>
                     Importar/Exportar
                   </Link>
@@ -101,8 +109,9 @@ const Header = () => {
                       className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100 inline-flex items-center gap-2"
                       onClick={() => setOptionsOpen(false)}
                     >
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
-                        <path d="M12 2a10 10 0 100 20 10 10 0 000-20zm1 5a1 1 0 10-2 0v4H7a1 1 0 100 2h4v4a1 1 0 102 0v-4h4a1 1 0 100-2h-4V7z" />
+                      {/* Ícone de Admin: escudo sólido para destaque */}
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="w-5 h-5 text-gray-700" fill="currentColor" aria-hidden="true">
+                        <path d="M12 3l7 4v5c0 5-3.5 8.5-7 9-3.5-.5-7-4-7-9V7l7-4z" />
                       </svg>
                       Admin
                     </Link>

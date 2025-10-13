@@ -39,7 +39,7 @@ const Home = () => {
           </div>
         )}
       </div>
-      
+
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto mb-12">
         <div className="bg-white p-6 rounded-lg shadow-md">
           <div className="text-blue-600 text-4xl mb-4">
@@ -132,6 +132,13 @@ const Home = () => {
             </div>
           </div>
         </div>
+      </div>
+
+      {/* Link para Política de Privacidade (apenas visível na Home) */}
+      <div className="text-center mb-8">
+        <Link to="/privacidade" className="text-gray-600 hover:underline">
+          Política de Privacidade
+        </Link>
       </div>
     </div>
   );

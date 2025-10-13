@@ -11,6 +11,7 @@ import AdminPanel from './pages/AdminPanel';
 import NotFound from './pages/NotFound';
 import Summary from './pages/Summary';
 import Home from './pages/Home';
+import PrivacyPolicy from './pages/PrivacyPolicy';
 import ImportExport from './pages/ImportExport';
 import Reports from './pages/Reports';
 
@@ -30,6 +31,7 @@ function App() {
         <main className="flex-grow container mx-auto px-4 py-8">
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/privacidade" element={<PrivacyPolicy />} />
             <Route path="/login" element={user ? <Navigate to="/dashboard" /> : <Login />} />
             <Route path="/register" element={user ? <Navigate to="/dashboard" /> : <Register />} />
             

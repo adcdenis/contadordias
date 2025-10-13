@@ -115,7 +115,7 @@ const ImportExport = () => {
 
       <div className="bg-white shadow-md rounded p-6">
         <h2 className="text-xl font-semibold mb-4">Importar</h2>
-        <p className="text-gray-600 mb-4">Selecione um arquivo JSON. Se o <code>name</code> já existir, o registro será atualizado; caso contrário, um novo será criado. Aceita <strong>array</strong> ou objeto com chave <code>items</code>. Apenas seus registros serão afetados.</p>
+        <p className="text-gray-600 mb-4">Selecione um arquivo JSON. Se o <code>nome do contador</code> já existir, o registro será atualizado; caso contrário, um novo será criado. Aceita <strong>array</strong> ou objeto com chave <code>items</code>. Apenas seus registros serão afetados.</p>
         <div className="mb-4">
           <input
             type="file"
