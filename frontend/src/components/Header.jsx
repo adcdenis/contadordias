@@ -86,7 +86,7 @@ const Header = () => {
                     Relatórios
                   </Link>
                   <Link
-                    to="/backup"
+                    to="/importar-exportar"
                     className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100 inline-flex items-center gap-2"
                     onClick={() => setOptionsOpen(false)}
                   >
