@@ -259,21 +259,6 @@ const CounterForm = ({ counter, onSubmit, onCancel, onDelete, categories = [] })
       
       <div className="flex flex-row justify-between items-center flex-wrap gap-2">
         <div className="w-auto">
-          {onDelete && (
-            <button
-              type="button"
-              className="btn btn-danger inline-flex items-center gap-2 text-sm px-3 py-1.5 sm:text-base sm:px-4 sm:py-2"
-              onClick={onDelete}
-              aria-label="Excluir"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
-                <path d="M9 3.75A.75.75 0 019.75 3h4.5a.75.75 0 01.75.75V5.25H18a.75.75 0 010 1.5h-.592l-.563 12.33A2.25 2.25 0 0114.6 21H9.4a2.25 2.25 0 01-2.245-1.92L6.592 6.75H6a.75.75 0 010-1.5h2.25V3.75zM8.095 6.75l.522 11.423a.75.75 0 00.748.677h5.27a.75.75 0 00.747-.677L16.905 6.75H8.095z" />
-              </svg>
-              <span className="hidden sm:inline">Excluir</span>
-            </button>
-          )}
-        </div>
-        <div className="flex gap-2 w-auto justify-end">
           <button
             type="button"
             className="btn btn-danger inline-flex items-center gap-2 text-sm px-3 py-1.5 sm:text-base sm:px-4 sm:py-2"
@@ -285,6 +270,9 @@ const CounterForm = ({ counter, onSubmit, onCancel, onDelete, categories = [] })
             </svg>
             <span className="hidden sm:inline">Cancelar</span>
           </button>
+          
+        </div>
+        <div className="flex gap-2 w-auto justify-end">          
           <button
             type="submit"
             className="btn btn-primary inline-flex items-center gap-2 text-sm px-3 py-1.5 sm:text-base sm:px-4 sm:py-2"
