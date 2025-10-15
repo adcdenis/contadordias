@@ -1,11 +1,15 @@
-import { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { calculateDetailedTime } from '../utils/timeUtils';
+import { googleCalendarService } from '../services/googleCalendarService';
+import { useToast } from '../context/ToastContext';
 
 const CounterCard = ({ counter, onDelete, selected = false, onSelectChange, selectionMode = false }) => {
   const { _id, name, description, eventDate, category, recurrence } = counter;
   const [showConfirmDelete, setShowConfirmDelete] = useState(false);
   const [currentTime, setCurrentTime] = useState(new Date());
+  const [isCreatingEvent, setIsCreatingEvent] = useState(false);
+  const { showToast } = useToast();
   const navigate = useNavigate();
   
   // Atualizar o tempo atual a cada segundo
@@ -56,6 +60,35 @@ const CounterCard = ({ counter, onDelete, selected = false, onSelectChange, sele
     navigate(`/counter/${_id}`);
   };
 
+  // Função para criar evento no Google Calendar
+  const handleGoogleCalendarIntegration = async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    setIsCreatingEvent(true);
+    
+    try {
+      // Preparar dados do evento
+      const eventData = {
+        name: counter.name,
+        eventDate: counter.eventDate,
+        description: counter.description || `Evento importante: ${counter.name}`
+      };
+      
+      // Criar evento diretamente no Google Calendar com lembretes padrão
+      const result = googleCalendarService.createEventFromCounter(eventData);
+      
+      if (result.success) {
+        showToast('✅ ' + result.message);
+      }
+    } catch (error) {
+      console.error('Erro na integração com Google Calendar:', error);
+      showToast('❌ Erro ao abrir Google Calendar: ' + error.message);
+    } finally {
+      setIsCreatingEvent(false);
+    }
+  };
+
   return (
     <div 
       className={`counter-card ${cardClass} cursor-pointer`}
@@ -77,6 +110,17 @@ const CounterCard = ({ counter, onDelete, selected = false, onSelectChange, sele
           <h3 className="text-base md:text-lg font-semibold truncate">{name}</h3>
         </div>
         <div className="flex space-x-2" onClick={(e) => e.stopPropagation()}>
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              handleGoogleCalendarIntegration(e);
+            }}
+            disabled={isCreatingEvent}
+            className="counter-action-btn text-purple-600 hover:text-purple-700 disabled:opacity-50 disabled:cursor-not-allowed"
+            title={isCreatingEvent ? "Criando evento..." : "Adicionar ao Google Calendar"}
+          >
+            <span className="counter-icon">{isCreatingEvent ? "⏳" : "📅"}</span>
+          </button>
           <Link 
             to={`/counter/${_id}`} 
             className="counter-action-btn text-blue-600 hover:text-blue-700"
