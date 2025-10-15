@@ -64,6 +64,18 @@ const Home = () => {
             Classifique seus contadores por categorias para manter tudo organizado.
           </p>
         </div>
+
+        <div className="bg-white p-6 rounded-lg shadow-md">
+          <div className="text-blue-600 text-4xl mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+          </div>
+          <h2 className="text-xl font-bold mb-2">Integração Google Calendar</h2>
+          <p className="text-gray-600">
+            Adicione seus eventos diretamente ao Google Calendar com um clique.
+          </p>
+        </div>
           <div className="bg-white p-6 rounded-lg shadow-md">
               <div className="text-blue-600 text-4xl mb-4">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12" viewBox="0 0 24 24" fill="currentColor">
@@ -100,7 +112,7 @@ const Home = () => {
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl font-bold mb-6">Como Funciona</h2>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div>
               <div className="bg-blue-600 text-white rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-4">
                 1
@@ -128,6 +140,16 @@ const Home = () => {
               <h3 className="text-xl font-semibold mb-2">Acompanhe o Tempo</h3>
               <p className="text-gray-600">
                 Visualize quanto tempo falta ou já passou desde seus eventos.
+              </p>
+            </div>
+            
+            <div>
+              <div className="bg-blue-600 text-white rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-4">
+                4
+              </div>
+              <h3 className="text-xl font-semibold mb-2">Integre com Google Calendar</h3>
+              <p className="text-gray-600">
+                Adicione seus eventos ao Google Calendar diretamente do aplicativo.
               </p>
             </div>
           </div>
