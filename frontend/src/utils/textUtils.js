@@ -27,5 +27,5 @@ export const truncateText = (text, maxLength, suffix = '...') => {
  * @returns {string} O texto truncado para mobile
  */
 export const truncateForMobile = (text) => {
-  return truncateText(text, 25);
+  return truncateText(text, 20);
 };
