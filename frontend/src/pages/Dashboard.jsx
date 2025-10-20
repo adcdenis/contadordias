@@ -212,7 +212,7 @@ const Dashboard = () => {
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
               <path fillRule="evenodd" d="M12 4.5a.75.75 0 01.75.75v6h6a.75.75 0 010 1.5h-6v6a.75.75 0 01-1.5 0v-6h-6a.75.75 0 010-1.5h6v-6A.75.75 0 0112 4.5z" clipRule="evenodd" />
             </svg>
-            <span className="hidden sm:inline">Novo Contador</span>
+            <span>Novo Contador</span>
           </button>
         </div>
       </div>
@@ -292,8 +292,7 @@ const Dashboard = () => {
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
               <path fillRule="evenodd" d="M12 4.5a.75.75 0 01.75.75v6h6a.75.75 0 010 1.5h-6v6a.75.75 0 01-1.5 0v-6h-6a.75.75 0 010-1.5h6v-6A.75.75 0 0112 4.5z" clipRule="evenodd" />
             </svg>
-            <span className="sm:hidden">Criar</span>
-            <span className="hidden sm:inline">Criar seu primeiro contador</span>
+            <span>Criar seu primeiro contador</span>
           </button>
         </div>
       ) : (

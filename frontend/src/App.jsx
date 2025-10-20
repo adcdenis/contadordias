@@ -30,7 +30,8 @@ function App() {
         <Header />
         <main className="flex-grow container mx-auto px-4 py-8">
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={user ? <Navigate to="/dashboard" /> : <Home />} />
+            <Route path="/home" element={<Home />} />
             <Route path="/privacidade" element={<PrivacyPolicy />} />
             <Route path="/login" element={user ? <Navigate to="/dashboard" /> : <Login />} />
             <Route path="/register" element={user ? <Navigate to="/dashboard" /> : <Register />} />

@@ -245,7 +245,7 @@ const CounterDetail = () => {
                   <path d="M16.862 3.487a2.25 2.25 0 013.182 3.182l-9.58 9.58a2.25 2.25 0 01-.952.563l-3.714 1.06a.75.75 0 01-.932-.932l1.06-3.714a2.25 2.25 0 01.563-.952l9.58-9.58z" />
                   <path d="M5.25 20.25h13.5a.75.75 0 010 1.5H5.25a.75.75 0 010-1.5z" />
                 </svg>
-                <span className="hidden sm:inline">Editar</span>
+                <span>Editar</span>
               </button>
             
           </div>

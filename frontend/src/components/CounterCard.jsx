@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { calculateDetailedTime } from '../utils/timeUtils';
+import { truncateForMobile } from '../utils/textUtils';
 import { googleCalendarService } from '../services/googleCalendarService';
 import { useToast } from '../context/ToastContext';
 
@@ -107,7 +108,10 @@ const CounterCard = ({ counter, onDelete, selected = false, onSelectChange, sele
               className="w-4 h-4 accent-blue-600 cursor-pointer"
             />
           )}
-          <h3 className="text-base md:text-lg font-semibold truncate">{name}</h3>
+          <h3 className="text-base md:text-lg font-semibold truncate">
+            <span className="block sm:hidden">{truncateForMobile(name)}</span>
+            <span className="hidden sm:block">{name}</span>
+          </h3>
         </div>
         <div className="flex space-x-2" onClick={(e) => e.stopPropagation()}>
           <button
