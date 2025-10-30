@@ -1,4 +1,42 @@
 const Counter = require('../models/Counter');
+const CounterHistory = require('../models/CounterHistory');
+const { calculateDetailedTime } = require('../utils/timeUtils');
+
+// Helper para criar entrada no histórico
+const createHistoryEntry = async (counter, operation, userId) => {
+  try {
+    console.log('🔍 Criando entrada de histórico:', {
+      counterId: counter._id,
+      operation,
+      userId,
+      counterName: counter.name
+    });
+    
+    const timeSnapshot = calculateDetailedTime(counter.eventDate);
+    console.log('⏰ Time snapshot calculado:', timeSnapshot);
+    
+    const historyEntry = new CounterHistory({
+      counter: counter._id,
+      user: userId,
+      snapshot: {
+        name: counter.name,
+        description: counter.description || '',
+        eventDate: counter.eventDate,
+        category: counter.category || 'Geral',
+        recurrence: counter.recurrence || 'none'
+      },
+      timeSnapshot,
+      operation
+    });
+    
+    console.log('💾 Salvando entrada de histórico...');
+    const savedEntry = await historyEntry.save();
+    console.log('✅ Entrada de histórico salva com sucesso:', savedEntry._id);
+  } catch (error) {
+    console.error('❌ Erro ao criar entrada de histórico:', error);
+    // Não falha a operação principal se o histórico falhar
+  }
+};
 
 // Helper para avançar contadores recorrentes até uma data futura
 const advanceRecurringCounter = (counter) => {
@@ -95,6 +133,10 @@ exports.createCounter = async (req, res) => {
     });
 
     const createdCounter = await counter.save();
+    
+    // Criar entrada no histórico
+    await createHistoryEntry(createdCounter, 'create', req.user._id);
+    
     res.status(201).json(createdCounter);
   } catch (error) {
     console.error(error);
@@ -129,6 +171,10 @@ exports.updateCounter = async (req, res) => {
     }
 
     const updatedCounter = await counter.save();
+    
+    // Criar entrada no histórico
+    await createHistoryEntry(updatedCounter, 'update', req.user._id);
+    
     res.json(updatedCounter);
   } catch (error) {
     console.error(error);
@@ -152,8 +198,18 @@ exports.deleteCounter = async (req, res) => {
       return res.status(403).json({ message: 'Não autorizado' });
     }
 
+    // Criar entrada no histórico antes de deletar
+    await createHistoryEntry(counter, 'delete', req.user._id);
+
+    // Excluir todos os registros de histórico relacionados ao contador
+    const deletedHistoryCount = await CounterHistory.deleteMany({ counter: req.params.id });
+    console.log(`🗑️ Excluídos ${deletedHistoryCount.deletedCount} registros de histórico para o contador ${counter.name}`);
+
     await counter.deleteOne();
-    res.json({ message: 'Contador removido' });
+    res.json({ 
+      message: 'Contador removido', 
+      historyItemsDeleted: deletedHistoryCount.deletedCount 
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Erro no servidor' });
@@ -254,5 +310,56 @@ exports.importCounters = async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Erro ao importar contadores' });
+  }
+};
+
+// @desc    Buscar histórico de um contador
+// @route   GET /api/counters/:id/history
+// @access  Private
+exports.getCounterHistory = async (req, res) => {
+  try {
+    const counter = await Counter.findById(req.params.id);
+
+    if (!counter) {
+      return res.status(404).json({ message: 'Contador não encontrado' });
+    }
+
+    // Verificar se o contador pertence ao usuário
+    if (counter.user.toString() !== req.user._id.toString() && req.user.role !== 'admin') {
+      return res.status(403).json({ message: 'Não autorizado' });
+    }
+
+    const history = await CounterHistory.find({ counter: req.params.id })
+      .sort({ createdAt: -1 })
+      .populate('user', 'name email');
+
+    res.json(history);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Erro no servidor' });
+  }
+};
+
+// @desc    Deletar item do histórico
+// @route   DELETE /api/counters/history/:historyId
+// @access  Private
+exports.deleteHistoryItem = async (req, res) => {
+  try {
+    const historyItem = await CounterHistory.findById(req.params.historyId);
+
+    if (!historyItem) {
+      return res.status(404).json({ message: 'Item de histórico não encontrado' });
+    }
+
+    // Verificar se o item pertence ao usuário
+    if (historyItem.user.toString() !== req.user._id.toString() && req.user.role !== 'admin') {
+      return res.status(403).json({ message: 'Não autorizado' });
+    }
+
+    await historyItem.deleteOne();
+    res.json({ message: 'Item de histórico removido' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Erro no servidor' });
   }
 };

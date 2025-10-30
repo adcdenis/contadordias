@@ -4,6 +4,7 @@ import axios from 'axios';
 import { format } from 'date-fns';
 import { pt } from 'date-fns/locale';
 import CounterForm from '../components/CounterForm';
+import HistorySection from '../components/HistorySection';
 import { calculateDetailedTime } from '../utils/timeUtils';
 import { useToast } from '../context/ToastContext';
 
@@ -251,6 +252,9 @@ const CounterDetail = () => {
           </div>
         </div>
       )}
+      
+      {/* Seção de Histórico de Alterações - só mostra quando não está editando */}
+      {!editing && <HistorySection counterId={id} />}
     </div>
   );
 };

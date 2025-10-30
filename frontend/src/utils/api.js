@@ -63,6 +63,17 @@ export const counterAPI = {
     const payload = Array.isArray(items) ? { items } : items;
     const response = await axios.post(`${API_URL}/counters/import`, payload);
     return response.data;
+  },
+  
+  // Funções de histórico
+  getHistory: async (id) => {
+    const response = await axios.get(`${API_URL}/counters/${id}/history`);
+    return response.data;
+  },
+  
+  deleteHistoryItem: async (historyId) => {
+    const response = await axios.delete(`${API_URL}/counters/history/${historyId}`);
+    return response.data;
   }
 };
 

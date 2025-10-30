@@ -1,5 +1,6 @@
 const User = require('../models/User');
 const Counter = require('../models/Counter');
+const CounterHistory = require('../models/CounterHistory');
 
 // @desc    Obter todos os usuários (apenas admin)
 // @route   GET /api/users
@@ -25,12 +26,19 @@ exports.deleteUser = async (req, res) => {
       return res.status(404).json({ message: 'Usuário não encontrado' });
     }
 
+    // Excluir todo o histórico dos contadores do usuário
+    const deletedHistory = await CounterHistory.deleteMany({ user: user._id });
+
     // Remover todos os contadores associados ao usuário a ser excluído
     const deletedCounters = await Counter.deleteMany({ user: user._id });
 
-    // Excluir o usuário após remover seus contadores
+    // Excluir o usuário após remover seus contadores e histórico
     await user.deleteOne();
-    res.json({ message: 'Usuário removido e contadores associados excluídos', countersRemoved: deletedCounters.deletedCount || 0 });
+    res.json({ 
+      message: 'Usuário removido e contadores associados excluídos', 
+      countersRemoved: deletedCounters.deletedCount || 0,
+      historyItemsRemoved: deletedHistory.deletedCount || 0
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Erro no servidor' });
