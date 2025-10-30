@@ -116,6 +116,9 @@ exports.googleLogin = async (req, res) => {
     const email = payload?.email;
     const name = payload?.name || (email ? email.split('@')[0] : 'Usuário');
     const googleId = payload?.sub;
+    const profilePicture = payload?.picture;
+
+    console.log('Google login payload:', { email, name, googleId, profilePicture });
 
     if (!email) {
       return res.status(400).json({ message: 'Email não disponível no token Google' });
@@ -127,23 +130,36 @@ exports.googleLogin = async (req, res) => {
         name,
         email,
         provider: 'google',
-        googleId
+        googleId,
+        profilePicture
       });
   } else {
-      // Não alterar provider de usuários locais; apenas anexar googleId quando necessário
+      // Atualizar googleId e profilePicture para usuários existentes
+      let needsUpdate = false;
       if (!user.googleId) {
         user.googleId = googleId;
+        needsUpdate = true;
+      }
+      if (user.profilePicture !== profilePicture) {
+        user.profilePicture = profilePicture;
+        needsUpdate = true;
+      }
+      if (needsUpdate) {
         await user.save();
       }
     }
 
-    res.json({
+    const responseData = {
       _id: user._id,
       name: user.name,
       email: user.email,
       role: user.role,
+      profilePicture: user.profilePicture,
       token: generateToken(user._id)
-    });
+    };
+
+    console.log('Sending user data:', responseData);
+    res.json(responseData);
   } catch (error) {
     console.error('Erro no login com Google:', error);
     res.status(401).json({ message: 'Falha na autenticação com Google' });

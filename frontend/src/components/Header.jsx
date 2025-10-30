@@ -121,9 +121,22 @@ const Header = () => {
                   aria-expanded={menuOpen}
                 >
                   <Tooltip content={user.name}>
+                    {user.profilePicture ? (
+                      <img
+                        src={user.profilePicture}
+                        alt={user.name}
+                        className="mr-1 w-8 h-8 rounded-full flex-shrink-0 object-cover"
+                        onError={(e) => {
+                          // Fallback para iniciais se a imagem falhar ao carregar
+                          e.target.style.display = 'none';
+                          e.target.nextSibling.style.display = 'inline-flex';
+                        }}
+                      />
+                    ) : null}
                     <span
-                      className="mr-1 inline-flex items-center justify-center w-8 h-8 bg-white text-blue-600 font-semibold rounded-full flex-shrink-0"
+                      className={`mr-1 inline-flex items-center justify-center w-8 h-8 bg-white text-blue-600 font-semibold rounded-full flex-shrink-0 ${user.profilePicture ? 'hidden' : ''}`}
                       aria-label={user.name}
+                      style={{ display: user.profilePicture ? 'none' : 'inline-flex' }}
                     >
                       {getInitials(user.name)}
                     </span>
