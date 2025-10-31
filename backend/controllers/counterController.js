@@ -162,6 +162,10 @@ exports.updateCounter = async (req, res) => {
       return res.status(403).json({ message: 'Não autorizado' });
     }
 
+    // Criar entrada no histórico ANTES de atualizar (com o estado anterior)
+    await createHistoryEntry(counter, 'update', req.user._id);
+
+    // Agora atualizar o contador com os novos dados
     counter.name = name || counter.name;
     counter.description = description !== undefined ? description : counter.description;
     counter.eventDate = eventDate || counter.eventDate;
@@ -171,9 +175,6 @@ exports.updateCounter = async (req, res) => {
     }
 
     const updatedCounter = await counter.save();
-    
-    // Criar entrada no histórico
-    await createHistoryEntry(updatedCounter, 'update', req.user._id);
     
     res.json(updatedCounter);
   } catch (error) {
