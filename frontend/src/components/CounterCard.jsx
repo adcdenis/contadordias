@@ -90,6 +90,75 @@ const CounterCard = ({ counter, onDelete, selected = false, onSelectChange, sele
     }
   };
 
+  // Função para compartilhar snapshot do contador
+  const handleShareCounter = async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    try {
+      // Gerar texto de compartilhamento com todas as informações
+      const shareText = generateShareText();
+      
+      // Verificar se o Web Share API está disponível
+      if (navigator.share) {
+        await navigator.share({
+          title: `Contador: ${name}`,
+          text: shareText
+        });
+        showToast('✅ Contador compartilhado com sucesso!');
+      } else {
+        // Fallback para clipboard
+        await navigator.clipboard.writeText(shareText);
+        showToast('✅ Informações do contador copiadas para a área de transferência!');
+      }
+    } catch (error) {
+      console.error('Erro ao compartilhar contador:', error);
+      showToast('❌ Erro ao compartilhar contador');
+    }
+  };
+
+  // Função para gerar texto de compartilhamento
+  const generateShareText = () => {
+    const statusText = isPastEvent ? 'passou' : 'falta';
+    const timeText = timeDetails.formattedDistance;
+    
+    let shareText = `📅 *${name}*\n`;
+    
+    if (description) {
+      shareText += `📝 ${description}\n`;
+    }
+    
+    shareText += `🗓️ Data: ${formattedDate}\n`;
+    shareText += `⏰ ${isPastEvent ? 'Tempo decorrido' : 'Tempo restante'}: ${timeText}\n`;
+    
+    if (category) {
+      shareText += `🏷️ Categoria: ${category}\n`;
+    }
+    
+    if (recurrence && recurrence !== 'none') {
+      const recurrenceText = recurrence === 'weekly' ? 'Semanal' : 
+                            recurrence === 'monthly' ? 'Mensal' : 'Anual';
+      shareText += `🔁 Recorrência: ${recurrenceText}\n`;
+    }
+    
+    shareText += `\n⏱️ Detalhes do tempo:\n`;
+    
+    if (timeDetails.years > 0) {
+      shareText += `• ${timeDetails.years} ${timeDetails.years === 1 ? 'ano' : 'anos'}\n`;
+    }
+    if (timeDetails.months > 0) {
+      shareText += `• ${timeDetails.months} ${timeDetails.months === 1 ? 'mês' : 'meses'}\n`;
+    }
+    shareText += `• ${timeDetails.days} ${timeDetails.days === 1 ? 'dia' : 'dias'}\n`;
+    shareText += `• ${timeDetails.hours} ${timeDetails.hours === 1 ? 'hora' : 'horas'}\n`;
+    shareText += `• ${timeDetails.minutes} ${timeDetails.minutes === 1 ? 'minuto' : 'minutos'}\n`;
+    shareText += `• ${timeDetails.seconds} ${timeDetails.seconds === 1 ? 'segundo' : 'segundos'}\n`;
+    
+    shareText += `\n📱 Compartilhado via Contador de Dias`;
+    
+    return shareText;
+  };
+
   return (
     <div 
       className={`counter-card ${cardClass} cursor-pointer`}
@@ -114,6 +183,16 @@ const CounterCard = ({ counter, onDelete, selected = false, onSelectChange, sele
           </h3>
         </div>
         <div className="flex space-x-2" onClick={(e) => e.stopPropagation()}>
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              handleShareCounter(e);
+            }}
+            className="counter-action-btn text-orange-600 hover:text-orange-700"
+            title="Compartilhar contador"
+          >
+            <span className="counter-icon">📤</span>
+          </button>
           <button
             onClick={(e) => {
               e.stopPropagation();
