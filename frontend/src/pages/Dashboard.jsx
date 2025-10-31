@@ -160,7 +160,12 @@ const Dashboard = () => {
   return (
     <div className="p-3">
       <div className="flex justify-between items-center mb-4 bg-gradient-to-r from-blue-500 to-indigo-600 p-3 rounded-md shadow">
-        <h1 className="text-xl font-bold text-white">Contadores</h1>
+        <h1 className="text-xl font-bold text-white flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
+            <path d="M6 3a3 3 0 00-3 3v2.25a3 3 0 003 3h2.25a3 3 0 003-3V6a3 3 0 00-3-3H6zM15.75 3a3 3 0 00-3 3v2.25a3 3 0 003 3H18a3 3 0 003-3V6a3 3 0 00-3-3h-2.25zM6 12.75a3 3 0 00-3 3V18a3 3 0 003 3h2.25a3 3 0 003-3v-2.25a3 3 0 00-3-3H6zM17.625 13.5a.75.75 0 00-1.5 0v2.625H13.5a.75.75 0 000 1.5h2.625v2.625a.75.75 0 001.5 0v-2.625H20.25a.75.75 0 000-1.5h-2.625V13.5z" />
+          </svg>
+          Contadores
+        </h1>
         <div className="flex items-center gap-2">
           {/* Botões de seleção múltipla à esquerda do novo contador */}
           <button
@@ -204,10 +209,11 @@ const Dashboard = () => {
             </span>
           </button>
 
+          {/* Botão Novo para Desktop */}
           <button
             onClick={() => setShowForm(true)}
             aria-label="Novo"
-            className="bg-white text-blue-600 hover:bg-blue-50 font-semibold py-1 px-2 sm:py-1.5 sm:px-3 rounded-md shadow-sm transition-all duration-300 inline-flex items-center gap-2"
+            className="hidden sm:inline-flex bg-white text-blue-600 hover:bg-blue-50 font-semibold py-1 px-2 sm:py-1.5 sm:px-3 rounded-md shadow-sm transition-all duration-300 items-center gap-2"
           >
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
               <path fillRule="evenodd" d="M12 4.5a.75.75 0 01.75.75v6h6a.75.75 0 010 1.5h-6v6a.75.75 0 01-1.5 0v-6h-6a.75.75 0 010-1.5h6v-6A.75.75 0 0112 4.5z" clipRule="evenodd" />
@@ -216,6 +222,17 @@ const Dashboard = () => {
           </button>
         </div>
       </div>
+
+      {/* Botão Flutuante para Mobile */}
+      <button
+        onClick={() => setShowForm(true)}
+        aria-label="Adicionar novo contador"
+        className="sm:hidden fixed bottom-6 right-6 w-14 h-14 bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center z-40"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
+          <path fillRule="evenodd" d="M12 4.5a.75.75 0 01.75.75v6h6a.75.75 0 010 1.5h-6v6a.75.75 0 01-1.5 0v-6h-6a.75.75 0 010-1.5h6v-6A.75.75 0 0112 4.5z" clipRule="evenodd" />
+        </svg>
+      </button>
 
       {error && (
         <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">

@@ -46,28 +46,44 @@ const Header = () => {
   return (
     <header className="bg-blue-600 text-white shadow-md">
       <div className="container mx-auto px-4 py-4 flex flex-wrap items-center justify-between gap-2">
-        <Link to="/" className="text-2xl font-bold flex-shrink-0">Lembre+</Link>
+        <Link to="/" className="text-2xl font-bold flex-shrink-0 flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-7 h-7">
+            <path d="M12.75 12.75a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM7.5 15.75a.75.75 0 100-1.5.75.75 0 000 1.5zM8.25 17.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM9.75 15.75a.75.75 0 100-1.5.75.75 0 000 1.5zM10.5 17.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM12 15.75a.75.75 0 100-1.5.75.75 0 000 1.5zM12.75 17.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM14.25 15.75a.75.75 0 100-1.5.75.75 0 000 1.5zM15 17.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM16.5 15.75a.75.75 0 100-1.5.75.75 0 000 1.5zM15 12.75a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM16.5 13.5a.75.75 0 100-1.5.75.75 0 000 1.5z" />
+            <path fillRule="evenodd" d="M6.75 2.25A.75.75 0 017.5 3v1.5h9V3A.75.75 0 0118 3v1.5h.75a3 3 0 013 3v11.25a3 3 0 01-3 3H5.25a3 3 0 01-3-3V7.5a3 3 0 013-3H6V3a.75.75 0 01.75-.75zM5.25 6a1.5 1.5 0 00-1.5 1.5v11.25c0 .827.673 1.5 1.5 1.5h13.5c.827 0 1.5-.673 1.5-1.5V7.5c0-.827-.673-1.5-1.5-1.5H5.25z" clipRule="evenodd" />
+          </svg>
+          Lembre+
+        </Link>
         
         <nav className="flex flex-wrap items-center gap-2 ml-auto min-w-0">
           {user ? (
             <>
-              <Link to="/dashboard" className="px-2 py-1 sm:px-3 sm:py-2 rounded hover:bg-blue-700 mr-1 sm:mr-2 text-sm sm:text-base">
+              <Link to="/dashboard" className="px-2 py-1 sm:px-3 sm:py-2 rounded hover:bg-blue-700 mr-1 sm:mr-2 text-sm sm:text-base flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
+                  <path d="M11.47 3.84a.75.75 0 011.06 0l8.69 8.69a.75.75 0 101.06-1.06l-8.689-8.69a2.25 2.25 0 00-3.182 0l-8.69 8.69a.75.75 0 001.061 1.06l8.69-8.69z" />
+                  <path d="m12 5.432 8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 01-.75-.75v-4.5a.75.75 0 00-.75-.75h-3a.75.75 0 00-.75.75V21a.75.75 0 01-.75.75H5.625a1.875 1.875 0 01-1.875-1.875v-6.198a2.29 2.29 0 00.091-.086L12 5.43z" />
+                </svg>
                 Dashboard
               </Link>
-              <Link to="/resumo" className="px-2 py-1 sm:px-3 sm:py-2 rounded hover:bg-blue-700 mr-1 sm:mr-2 text-sm sm:text-base">
+              <Link to="/resumo" className="px-2 py-1 sm:px-3 sm:py-2 rounded hover:bg-blue-700 mr-1 sm:mr-2 text-sm sm:text-base flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
+                  <path d="M18.375 2.25c-1.035 0-1.875.84-1.875 1.875v15.75c0 1.035.84 1.875 1.875 1.875h.75c1.035 0 1.875-.84 1.875-1.875V4.125c0-1.036-.84-1.875-1.875-1.875h-.75zM9.75 8.625c0-1.036.84-1.875 1.875-1.875h.75c1.036 0 1.875.84 1.875 1.875v11.25c0 1.035-.84 1.875-1.875 1.875h-.75a1.875 1.875 0 01-1.875-1.875V8.625zM3 13.125c0-1.036.84-1.875 1.875-1.875h.75c1.036 0 1.875.84 1.875 1.875v6.75c0 1.035-.84 1.875-1.875 1.875h-.75A1.875 1.875 0 013 19.875v-6.75z" />
+                </svg>
                 Resumo
               </Link>
 
               {/* Opções dropdown */}
               <div className="relative" ref={optionsRef}>
                 <button
-                  className="px-2 py-1 sm:px-3 sm:py-2 rounded hover:bg-blue-700 flex items-center text-sm sm:text-base"
+                  className="px-2 py-1 sm:px-3 sm:py-2 rounded hover:bg-blue-700 flex items-center text-sm sm:text-base gap-2"
                   onClick={() => setOptionsOpen((prev) => !prev)}
                   aria-haspopup="menu"
                   aria-expanded={optionsOpen}
-                >                 
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
+                    <path fillRule="evenodd" d="M11.078 2.25c-.917 0-1.699.663-1.85 1.567L9.05 4.889c-.02.12-.115.26-.297.348a7.493 7.493 0 00-.986.57c-.166.115-.334.126-.45.083L6.279 5.48a1.875 1.875 0 00-2.416.919l-.243.422a1.875 1.875 0 00.319 2.37l.94.853c.091.083.147.208.147.351 0 .342.03.686.09 1.024.014.08-.006.166-.076.235l-.94.853a1.875 1.875 0 00-.319 2.37l.243.422a1.875 1.875 0 002.416.919l1.038-.41c.116-.043.284-.032.45.083.312.197.65.395.986.57.182.088.277.228.297.348l.178 1.071c.151.904.933 1.567 1.85 1.567h.486c.917 0 1.699-.663 1.85-1.567l.178-1.072c.02-.119.115-.26.297-.347a7.493 7.493 0 00.986-.57c.166-.115.334-.126.45-.083l1.038.41a1.875 1.875 0 002.416-.919l.243-.422a1.875 1.875 0 00-.319-2.37l-.94-.853c-.07-.069-.09-.155-.076-.235.06-.338.09-.682.09-1.024 0-.143.056-.268.147-.351l.94-.853a1.875 1.875 0 00.319-2.37l-.243-.422a1.875 1.875 0 00-2.416-.919l-1.038.41c-.116.043-.284.032-.45-.083a7.493 7.493 0 00-.986-.57c-.182-.088-.277-.228-.297-.348L12.928 3.817c-.151-.904-.933-1.567-1.85-1.567h-.486zM8.25 12a3.75 3.75 0 117.5 0 3.75 3.75 0 01-7.5 0z" clipRule="evenodd" />
+                  </svg>                
                   Opções
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                   </svg>
                 </button>
