@@ -131,7 +131,12 @@ const AdminPanel = () => {
   return (
     <div className="p-4 sm:p-6 max-w-7xl mx-auto">
       <div className="mb-6">
-        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">Painel de Administração</h1>
+        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2 flex items-center gap-3">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-8 h-8 text-blue-600">
+            <path fillRule="evenodd" d="M12.516 2.17a.75.75 0 00-1.032 0 11.209 11.209 0 01-7.877 3.08.75.75 0 00-.722.515A12.74 12.74 0 002.25 9.75c0 5.814 3.051 10.077 9.75 12.98a.75.75 0 00.5 0c6.699-2.903 9.75-7.166 9.75-12.98 0-1.39-.223-2.73-.635-3.985a.75.75 0 00-.722-.515 11.209 11.209 0 01-7.877-3.08z" clipRule="evenodd" />
+          </svg>
+          Painel de Administração
+        </h1>
         <p className="text-gray-600 text-sm sm:text-base">Gerencie usuários e permissões do sistema</p>
       </div>
       

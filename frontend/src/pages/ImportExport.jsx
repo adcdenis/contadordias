@@ -83,7 +83,13 @@ const ImportExport = () => {
 
   return (
     <div className="max-w-3xl mx-auto">
-      <h1 className="text-3xl font-bold mb-6">Importar / Exportar Contadores</h1>
+      <h1 className="text-3xl font-bold mb-6 flex items-center gap-3">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M7 7l5 5-5 5M7 12h10" />
+          <path strokeLinecap="round" strokeLinejoin="round" d="M17 17l-5-5 5-5M17 12H7" />
+        </svg>
+        Importar / Exportar Contadores
+      </h1>
 
       {error && (
         <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">

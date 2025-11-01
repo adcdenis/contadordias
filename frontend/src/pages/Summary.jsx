@@ -165,7 +165,7 @@ const UpcomingEvents = ({ counters }) => {
             }`}>
               <div className="flex items-center justify-between">
                 <div className="flex-1 min-w-0">
-                  <h4 className="font-medium text-gray-900 truncate">{counter.title}</h4>
+                  <h4 className="font-medium text-gray-900 truncate">{counter.name}</h4>
                   <p className="text-sm text-gray-600">{formatDate(counter.eventDate)}</p>
                   {counter.category && (
                     <span className="inline-block px-2 py-1 text-xs bg-gray-200 text-gray-700 rounded-full mt-1">
@@ -393,18 +393,15 @@ const Summary = () => {
         <div className="mb-8">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
-              <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-2">
+              <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-2 flex items-center gap-3">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-8 h-8 sm:w-10 sm:h-10 text-blue-600">
+                  <path d="M18.375 2.25c-1.035 0-1.875.84-1.875 1.875v15.75c0 1.035.84 1.875 1.875 1.875h.75c1.035 0 1.875-.84 1.875-1.875V4.125c0-1.036-.84-1.875-1.875-1.875h-.75zM9.75 8.625c0-1.036.84-1.875 1.875-1.875h.75c1.036 0 1.875.84 1.875 1.875v11.25c0 1.035-.84 1.875-1.875 1.875h-.75a1.875 1.875 0 01-1.875-1.875V8.625zM3 13.125c0-1.036.84-1.875 1.875-1.875h.75c1.036 0 1.875.84 1.875 1.875v6.75c0 1.035-.84 1.875-1.875 1.875h-.75A1.875 1.875 0 013 19.875v-6.75z" />
+                </svg>
                 Resumo Geral
               </h1>
               <p className="text-gray-600 text-lg">
                 Visão completa dos seus contadores e eventos
               </p>
-            </div>
-            <div className="flex items-center gap-2 text-sm text-gray-500">
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-              Atualizado agora
             </div>
           </div>
         </div>

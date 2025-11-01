@@ -164,7 +164,14 @@ const Reports = () => {
   return (
     <div className="p-4 sm:p-6 max-w-7xl mx-auto">
       <div className="mb-6">
-        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">Relatórios</h1>
+        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2 flex items-center gap-3">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-7 h-7 sm:w-8 sm:h-8 text-blue-600">
+            <rect x="4.5" y="16" width="3" height="3" rx="0" />
+            <rect x="10.5" y="6" width="3" height="11" rx="0" />
+            <rect x="16" y="12" width="3" height="5" rx="0" />
+          </svg>
+          Relatórios
+        </h1>
         <p className="text-gray-600 text-sm sm:text-base">Gere relatórios detalhados dos seus contadores</p>
       </div>
       
