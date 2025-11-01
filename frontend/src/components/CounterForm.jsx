@@ -3,9 +3,26 @@ import React, { useMemo, useState } from 'react';
 const CounterForm = ({ counter, onSubmit, onCancel, onDelete, categories = [] }) => {
   const [name, setName] = useState(counter?.name || '');
   const [description, setDescription] = useState(counter?.description || '');
+  // Função para obter data atual formatada (YYYY-MM-DD)
+  const getCurrentDate = () => {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const day = String(now.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  };
+
+  // Função para obter hora atual formatada (HH:MM)
+  const getCurrentTime = () => {
+    const now = new Date();
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    return `${hours}:${minutes}`;
+  };
+
   // Inicializar data/hora em horário local (evitar deslocamento por UTC)
   const [eventDate, setEventDate] = useState(() => {
-    if (!counter?.eventDate) return '';
+    if (!counter?.eventDate) return getCurrentDate(); // Usar data atual se não há contador
     const d = new Date(counter.eventDate);
     const year = d.getFullYear();
     const month = String(d.getMonth() + 1).padStart(2, '0');
@@ -13,7 +30,7 @@ const CounterForm = ({ counter, onSubmit, onCancel, onDelete, categories = [] })
     return `${year}-${month}-${day}`;
   });
   const [eventTime, setEventTime] = useState(() => {
-    if (!counter?.eventDate) return '00:00';
+    if (!counter?.eventDate) return getCurrentTime(); // Usar hora atual se não há contador
     const d = new Date(counter.eventDate);
     const hours = String(d.getHours()).padStart(2, '0');
     const minutes = String(d.getMinutes()).padStart(2, '0');
