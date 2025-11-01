@@ -161,11 +161,11 @@ const CounterCard = ({ counter, onDelete, selected = false, onSelectChange, sele
 
   return (
     <div 
-      className={`counter-card ${cardClass} cursor-pointer relative`}
+      className={`counter-card ${cardClass} cursor-pointer relative pr-8`}
       onClick={navigateToCounter}
     >
       <div className="flex justify-between items-start mb-3">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 max-w-[calc(100%-2rem)]">
           {/* Checkbox de seleção múltipla (visível apenas em modo de seleção) */}
           {selectionMode && onSelectChange && (
             <input
@@ -274,7 +274,7 @@ const CounterCard = ({ counter, onDelete, selected = false, onSelectChange, sele
         </div>
       )}
       
-      <div className="mb-2 flex items-center flex-wrap">
+      <div className="mb-2 flex items-center flex-wrap max-w-[calc(100%-2rem)]">
         <span className="counter-badge">{category}</span>
         {recurrence && recurrence !== 'none' && (
           <span className="counter-badge">
@@ -283,7 +283,7 @@ const CounterCard = ({ counter, onDelete, selected = false, onSelectChange, sele
         )}
       </div>      
       
-      <div className="mt-1">
+      <div className="mt-1 max-w-[calc(100%-2rem)]">
         <div className={`grid grid-cols-6 gap-2 text-center`}>
           {isYearsVisible && (
             <div className={`counter-metric ${isPastEvent ? 'counter-metric-red' : 'counter-metric-blue'} rounded-lg`}>
