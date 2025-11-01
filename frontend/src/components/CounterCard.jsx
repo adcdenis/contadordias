@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useMemo, useRef } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { createPortal } from 'react-dom';
 import { calculateDetailedTime } from '../utils/timeUtils';
 import { truncateForMobile } from '../utils/textUtils';
 import { googleCalendarService } from '../services/googleCalendarService';
@@ -11,12 +10,8 @@ const CounterCard = ({ counter, onDelete, selected = false, onSelectChange, sele
   const [showConfirmDelete, setShowConfirmDelete] = useState(false);
   const [currentTime, setCurrentTime] = useState(new Date());
   const [isCreatingEvent, setIsCreatingEvent] = useState(false);
-  const [showMenu, setShowMenu] = useState(false);
-  const [menuPosition, setMenuPosition] = useState({ top: 0, left: 0 });
   const { showToast } = useToast();
   const navigate = useNavigate();
-  const menuRef = useRef(null);
-  const buttonRef = useRef(null);
   
   // Atualizar o tempo atual a cada segundo
   useEffect(() => {
@@ -27,48 +22,6 @@ const CounterCard = ({ counter, onDelete, selected = false, onSelectChange, sele
     return () => clearInterval(interval);
   }, []);
 
-  // Função para calcular a posição do menu
-  const calculateMenuPosition = () => {
-    if (buttonRef.current) {
-      const rect = buttonRef.current.getBoundingClientRect();
-      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-      const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
-      
-      setMenuPosition({
-        top: rect.bottom + scrollTop + 4, // 4px de margem
-        left: rect.right + scrollLeft - 192 // 192px é a largura do menu (min-w-48 = 12rem = 192px)
-      });
-    }
-  };
-
-  // Fechar menu ao clicar fora dele e recalcular posição no scroll/resize
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (menuRef.current && !menuRef.current.contains(event.target) && 
-          buttonRef.current && !buttonRef.current.contains(event.target)) {
-        setShowMenu(false);
-      }
-    };
-
-    const handleScrollOrResize = () => {
-      if (showMenu) {
-        calculateMenuPosition();
-      }
-    };
-
-    if (showMenu) {
-      document.addEventListener('mousedown', handleClickOutside);
-      window.addEventListener('scroll', handleScrollOrResize, true);
-      window.addEventListener('resize', handleScrollOrResize);
-    }
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-      window.removeEventListener('scroll', handleScrollOrResize, true);
-      window.removeEventListener('resize', handleScrollOrResize);
-    };
-  }, [showMenu]);
-  
   // Calcular tempo detalhado usando o tempo atual atualizado (memoizado para performance)
   const timeDetails = useMemo(() => {
     return calculateDetailedTime(eventDate, currentTime);
@@ -229,109 +182,66 @@ const CounterCard = ({ counter, onDelete, selected = false, onSelectChange, sele
             <span className="hidden sm:block">{name}</span>
           </h3>
         </div>
-        <div className="relative z-10" onClick={(e) => e.stopPropagation()}>
-          {/* Botão do Menu */}
-          <button
-            ref={buttonRef}
-            onClick={(e) => {
-              e.stopPropagation();
-              if (!showMenu) {
-                calculateMenuPosition();
-              }
-              setShowMenu(!showMenu);
-            }}
-            className="counter-action-btn text-gray-600 hover:text-gray-700 relative"
-            title="Opções"
-          >
-            <span className="counter-icon">⋮</span>
-          </button>
+      </div>
+      
+      {/* Ícones de ação posicionados absolutamente na lateral direita */}
+      <div className="absolute top-2 right-2 flex flex-col gap-1 items-center" onClick={(e) => e.stopPropagation()}>
+        {/* Compartilhar */}
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            handleShareCounter(e);
+          }}
+          className="counter-action-btn text-orange-600 hover:text-orange-700 p-1 bg-white/80 hover:bg-white rounded shadow-sm"
+          title="Compartilhar"
+        >
+          <span className="counter-icon text-xs">📤</span>
+        </button>
 
-          {/* Menu Dropdown usando Portal */}
-          {showMenu && createPortal(
-            <div 
-              ref={menuRef}
-              className="fixed bg-white border border-gray-200 rounded-lg shadow-lg min-w-48 py-1 animate-in slide-in-from-top-2 duration-200"
-              style={{ 
-                top: `${menuPosition.top}px`, 
-                left: `${menuPosition.left}px`,
-                zIndex: 99999
-              }}
-            >
-                 {/* Compartilhar */}
-                 <button
-                   onClick={(e) => {
-                     e.stopPropagation();
-                     setShowMenu(false);
-                     handleShareCounter(e);
-                   }}
-                   className="w-full px-4 py-2 text-left text-sm hover:bg-gray-50 flex items-center gap-3 text-orange-600 transition-colors duration-150"
-                 >
-                   <span>📤</span>
-                   <span>Compartilhar</span>
-                 </button>
+        {/* Google Calendar */}
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            handleGoogleCalendarIntegration(e);
+          }}
+          disabled={isCreatingEvent}
+          className="counter-action-btn text-purple-600 hover:text-purple-700 disabled:opacity-50 disabled:cursor-not-allowed p-1 bg-white/80 hover:bg-white rounded shadow-sm"
+          title="Google Calendar"
+        >
+          <span className="counter-icon text-xs">{isCreatingEvent ? "⏳" : "📅"}</span>
+        </button>
 
-                 {/* Google Calendar */}
-                 <button
-                   onClick={(e) => {
-                     e.stopPropagation();
-                     setShowMenu(false);
-                     handleGoogleCalendarIntegration(e);
-                   }}
-                   disabled={isCreatingEvent}
-                   className="w-full px-4 py-2 text-left text-sm hover:bg-gray-50 flex items-center gap-3 text-purple-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-150"
-                 >
-                   <span>{isCreatingEvent ? "⏳" : "📅"}</span>
-                   <span>{isCreatingEvent ? "Criando evento..." : "Google Calendar"}</span>
-                 </button>
+        {/* Ver detalhes */}
+        <Link 
+          to={`/counter/${_id}`} 
+          className="counter-action-btn text-blue-600 hover:text-blue-700 p-1 bg-white/80 hover:bg-white rounded shadow-sm"
+          title="Ver detalhes"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <span className="counter-icon text-xs">👁️</span>
+        </Link>
 
-                 {/* Divisor */}
-                 <div className="border-t border-gray-100 my-1"></div>
+        {/* Editar */}
+        <Link
+          to={`/counter/${_id}?edit=1`}
+          className="counter-action-btn text-green-600 hover:text-green-700 p-1 bg-white/80 hover:bg-white rounded shadow-sm"
+          title="Editar"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <span className="counter-icon text-xs">✏️</span>
+        </Link>
 
-                 {/* Ver detalhes */}
-                 <Link 
-                   to={`/counter/${_id}`} 
-                   className="w-full px-4 py-2 text-left text-sm hover:bg-gray-50 flex items-center gap-3 text-blue-600 block transition-colors duration-150"
-                   onClick={(e) => {
-                     e.stopPropagation();
-                     setShowMenu(false);
-                   }}
-                 >
-                   <span>👁️</span>
-                   <span>Ver detalhes</span>
-                 </Link>
-
-                 {/* Editar */}
-                 <Link
-                   to={`/counter/${_id}?edit=1`}
-                   className="w-full px-4 py-2 text-left text-sm hover:bg-gray-50 flex items-center gap-3 text-green-600 block transition-colors duration-150"
-                   onClick={(e) => {
-                     e.stopPropagation();
-                     setShowMenu(false);
-                   }}
-                 >
-                   <span>✏️</span>
-                   <span>Editar</span>
-                 </Link>
-
-                 {/* Divisor */}
-                 <div className="border-t border-gray-100 my-1"></div>
-
-                 {/* Excluir */}
-                 <button
-                   onClick={(e) => {
-                     e.stopPropagation();
-                     setShowMenu(false);
-                     handleDeleteClick();
-                   }}
-                   className="w-full px-4 py-2 text-left text-sm hover:bg-gray-50 flex items-center gap-3 text-red-600 transition-colors duration-150"
-                 >
-                   <span>🗑️</span>
-                   <span>Excluir</span>
-                 </button>
-               </div>,
-               document.body
-          )}
-        </div>
+        {/* Excluir */}
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            handleDeleteClick();
+          }}
+          className="counter-action-btn text-red-600 hover:text-red-700 p-1 bg-white/80 hover:bg-white rounded shadow-sm"
+          title="Excluir"
+        >
+          <span className="counter-icon text-xs">🗑️</span>
+        </button>
       </div>
       
       {/* Modal de confirmação de exclusão */}
